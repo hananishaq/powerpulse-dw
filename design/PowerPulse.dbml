@@ -1,0 +1,86 @@
+// Phase 1 physical design. Generated from model.py; no database created.
+Table DimDate {
+  DateKey bigint [pk, increment, not null]
+  CalendarDate date [not null]
+  CalendarYear smallint [not null]
+  QuarterNumber smallint [not null]
+  MonthNumber smallint [not null]
+  ISOWeekYear smallint [not null]
+  ISOWeekNumber smallint [not null]
+  WeekdayNumber smallint [not null]
+  Season text [not null]
+  indexes {
+    (CalendarDate) [unique]
+  }
+}
+Table DimHour {
+  HourKey bigint [pk, increment, not null]
+  HourEnding smallint [not null]
+  HourLabel text [not null]
+  indexes {
+    (HourEnding) [unique]
+  }
+}
+Table DimBalancingAuthority {
+  AuthorityKey bigint [pk, increment, not null]
+  AuthorityCode text [not null]
+  AuthorityName text [not null]
+  RegionCode text [not null]
+  RegionName text [not null]
+  indexes {
+    (AuthorityCode) [unique]
+  }
+}
+Table DimEnergySource {
+  EnergySourceKey bigint [pk, increment, not null]
+  SourceColumn text [not null]
+  SourceLabel text [not null]
+  SourceGroup text [not null]
+  indexes {
+    (SourceColumn) [unique]
+  }
+}
+Table DimSourceSnapshot {
+  SourceSnapshotKey bigint [pk, increment, not null]
+  FileName text [not null]
+  SourceURL text [not null]
+  SHA256 char(64) [not null]
+  RetrievedAtUTC timestamptz [not null]
+  SourceRowCount integer [not null]
+  indexes {
+    (FileName, SHA256) [unique]
+  }
+}
+Table FactHourlyDemand {
+  DemandKey bigint [pk, increment, not null]
+  AuthorityKey bigint [not null, ref: > DimBalancingAuthority.AuthorityKey]
+  DateKey bigint [not null, ref: > DimDate.DateKey]
+  HourKey bigint [not null, ref: > DimHour.HourKey]
+  UTCHourEnd timestamptz [not null]
+  LocalHourEnd timestamp [not null]
+  UTCOffsetMinutes smallint [not null]
+  ActualDemandMW numeric(18,4) []
+  ForecastDemandMW numeric(18,4) []
+  TotalGenerationMW numeric(18,4) []
+  SourceSnapshotKey bigint [not null, ref: > DimSourceSnapshot.SourceSnapshotKey]
+  SourceRowNumber integer [not null]
+  indexes {
+    (AuthorityKey, UTCHourEnd) [unique]
+  }
+}
+Table FactHourlyGeneration {
+  GenerationKey bigint [pk, increment, not null]
+  AuthorityKey bigint [not null, ref: > DimBalancingAuthority.AuthorityKey]
+  DateKey bigint [not null, ref: > DimDate.DateKey]
+  HourKey bigint [not null, ref: > DimHour.HourKey]
+  EnergySourceKey bigint [not null, ref: > DimEnergySource.EnergySourceKey]
+  UTCHourEnd timestamptz [not null]
+  LocalHourEnd timestamp [not null]
+  UTCOffsetMinutes smallint [not null]
+  GenerationMW numeric(18,4) [not null]
+  SourceSnapshotKey bigint [not null, ref: > DimSourceSnapshot.SourceSnapshotKey]
+  SourceRowNumber integer [not null]
+  indexes {
+    (AuthorityKey, UTCHourEnd, EnergySourceKey) [unique]
+  }
+}

@@ -1,0 +1,20 @@
+SourceColumn,SourceLabel,SourceGroup,NumericCellsInBaseline
+Net Generation (MW) from Coal,Coal,Coal,84376
+Net Generation (MW) from Natural Gas,Natural Gas,Gas,87473
+Net Generation (MW) from Nuclear,Nuclear,Nuclear,87472
+Net Generation (MW) from All Petroleum Products,All Petroleum Products,Petroleum,67529
+Net Generation (MW) from Hydropower and Pumped Storage,Hydropower and Pumped Storage,Hydro/storage,21807
+Net Generation (MW) from Solar,Solar,Solar,21807
+Net Generation (MW) from Wind,Wind,Wind,21807
+Net Generation (MW) from Other Fuel Sources,Other Fuel Sources,Other/unknown,87473
+Net Generation (MW) from Unknown Fuel Sources,Unknown Fuel Sources,Other/unknown,0
+Net Generation (MW) from Hydropower Excluding Pumped Storage,Hydropower Excluding Pumped Storage,Hydro/storage,65666
+Net Generation (MW) from Pumped Storage,Pumped Storage,Hydro/storage,10032
+Net Generation (MW) from Solar without Integrated Battery Storage,Solar without Integrated Battery Storage,Solar,65666
+Net Generation (MW) from Solar with Integrated Battery Storage,Solar with Integrated Battery Storage,Solar,10080
+Net Generation (MW) from Wind without Integrated Battery Storage,Wind without Integrated Battery Storage,Wind,65666
+Net Generation (MW) from Wind with Integrated Battery Storage,Wind with Integrated Battery Storage,Wind,0
+Net Generation (MW) from Battery Storage,Battery Storage,Storage,20497
+Net Generation (MW) from Other Energy Storage,Other Energy Storage,Storage,0
+Net Generation (MW) from Unknown Energy Storage,Unknown Energy Storage,Storage,9985
+Net Generation (MW) from Geothermal,Geothermal,Geothermal,384

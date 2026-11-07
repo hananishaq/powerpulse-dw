@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-ossdata.vscode-pgsql",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "yzhang.markdown-all-in-one",
+    "mechatroner.rainbow-csv"
+  ]
+}

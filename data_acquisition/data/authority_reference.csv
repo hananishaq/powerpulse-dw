@@ -1,0 +1,6 @@
+AuthorityCode,AuthorityName,ReportingTimeZone,RegionCode,RegionName
+CISO,California Independent System Operator,Pacific,CAL,California
+ERCO,"Electric Reliability Council of Texas, Inc.",Central,TEX,Texas
+ISNE,ISO New England,Eastern,NE,New England
+NYIS,New York Independent System Operator,Eastern,NY,New York
+PJM,"PJM Interconnection, LLC",Eastern,MIDA,Mid-Atlantic
