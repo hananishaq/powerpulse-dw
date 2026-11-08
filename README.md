@@ -23,7 +23,7 @@ conformed dimensions. Source: official EIA bulk CSVs — no synthetic data.
 | Phase | Scope | Status |
 |---|---|---|
 | 1 | Business analysis & dimensional design (30%) | ✅ Complete — see `docs/phase1/` |
-| 2 | Physical DW implementation & ETL pipeline (40%) | 🔧 In progress — plan in `docs/phase2/PHASE2_PLAN.md` |
+| 2 | Physical DW implementation & ETL pipeline (40%) | 🔧 In progress — task board `docs/phase2/TASKS.md`, plan `docs/phase2/PHASE2_PLAN.md` |
 
 ## Measured source facts (Phase 1 evidence)
 
@@ -37,7 +37,7 @@ conformed dimensions. Source: official EIA bulk CSVs — no synthetic data.
 
 ```
 docs/phase1/          Phase 1 submission PDFs, Excel data dictionary, schema atlas, ERD (06b)
-docs/phase2/          Phase 2 plan and Phase 1 → Phase 2 name mapping (CamelCase → snake_case)
+docs/phase2/          Task board (who does what), 5-step plan, Phase 1 → Phase 2 name mapping
 design/               DBML (dbdiagram.io) and draw.io sources of the schema
 data_acquisition/     Download/profile scripts + the selected raw CSVs, manifest, profile (Phase 1 evidence)
 sql/00_setup/         Database + schema creation
