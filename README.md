@@ -20,7 +20,7 @@ Committed source CSVs -> project_staging -> project_dw -> project_reporting -> B
 
 ## Setup and complete execution
 
-Install PostgreSQL 16+ and Python 3.10+. The selected CSVs and reference files are already committed; normal execution does not download EIA data.
+Install PostgreSQL 16+ and Python 3.10+. The selected CSVs and reference files are already committed; normal execution does not download EIA data. Use Git clone so `.gitattributes` restores the manifest's CRLF CSV bytes consistently on Windows and Linux. GitHub-generated source ZIPs may use normalized LF bytes and fail the strict input hash audit.
 
 ```powershell
 git clone https://github.com/hananishaq/powerpulse-dw.git
