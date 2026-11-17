@@ -4,10 +4,16 @@ CREATE TABLE IF NOT EXISTS project_dw.etl_run_log (
     step_name TEXT NOT NULL,
     started_at TIMESTAMPTZ NOT NULL,
     ended_at TIMESTAMPTZ,
-    rows_read BIGINT NOT NULL DEFAULT 0,
-    rows_inserted BIGINT NOT NULL DEFAULT 0,
-    rows_updated BIGINT NOT NULL DEFAULT 0,
-    rows_rejected BIGINT NOT NULL DEFAULT 0,
-    status TEXT NOT NULL,
+    rows_read BIGINT NOT NULL DEFAULT 0 CHECK (rows_read >= 0),
+    rows_inserted BIGINT NOT NULL DEFAULT 0 CHECK (rows_inserted >= 0),
+    rows_updated BIGINT NOT NULL DEFAULT 0 CHECK (rows_updated >= 0),
+    rows_rejected BIGINT NOT NULL DEFAULT 0 CHECK (rows_rejected >= 0),
+    status TEXT NOT NULL CHECK (status IN ('RUNNING', 'SUCCESS', 'FAILED')),
     error_message TEXT
 );
+
+CREATE INDEX IF NOT EXISTS idx_etl_run_log_run_id
+    ON project_dw.etl_run_log(run_id);
+
+CREATE INDEX IF NOT EXISTS idx_etl_run_log_status
+    ON project_dw.etl_run_log(status);

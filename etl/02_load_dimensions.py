@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import os
-
 import psycopg
 from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 SQL_DIR = ROOT / "sql" / "03_dimension_load"
+
 SCRIPTS = [
     "10_load_dim_hour.sql",
     "11_load_dim_date.sql",
@@ -14,6 +14,7 @@ SCRIPTS = [
     "13_load_dim_energy_source.sql",
     "14_load_dim_source_snapshot.sql",
 ]
+
 COUNTS = [
     ("dim_hour", 24),
     ("dim_date", 731),
@@ -37,32 +38,82 @@ if not connection["password"]:
 
 with psycopg.connect(**connection) as conn:
     with conn.cursor() as cur:
+
+        # Save existing surrogate-key mappings
+        cur.execute("""
+            SELECT authority_code, authority_key
+            FROM project_dw.dim_balancing_authority
+            ORDER BY authority_code
+        """)
+        before_authorities = dict(cur.fetchall())
+
+        cur.execute("""
+            SELECT source_column, energy_source_key
+            FROM project_dw.dim_energy_source
+            ORDER BY source_column
+        """)
+        before_sources = dict(cur.fetchall())
+
+        # Run dimension loaders
         for script in SCRIPTS:
             path = SQL_DIR / script
             print(f"Running {path.relative_to(ROOT)}")
             cur.execute(path.read_text(encoding="utf-8"))
+
         conn.commit()
 
-        total = 0
+        # Validate every dimension independently
         print("\nDimension counts")
+        validation_failed = False
+        total = 0
+
         for table, expected in COUNTS:
             cur.execute(f"SELECT COUNT(*) FROM project_dw.{table}")
             actual = cur.fetchone()[0]
             total += actual
-            status = "OK" if actual == expected else f"EXPECTED {expected}"
-            print(f"{table:28} {actual:4}  {status}")
 
-        print(f"{'TOTAL':28} {total:4}  {'OK' if total == 783 else 'EXPECTED 783'}")
+            if actual == expected:
+                print(f"{table:28} {actual:4}  OK")
+            else:
+                print(f"{table:28} {actual:4}  EXPECTED {expected}")
+                validation_failed = True
 
+        print(f"{'TOTAL':28} {total:4}")
+
+        if validation_failed:
+            raise SystemExit("Dimension validation failed")
+
+        # Check surrogate keys after rerun
+        cur.execute("""
+            SELECT authority_code, authority_key
+            FROM project_dw.dim_balancing_authority
+            ORDER BY authority_code
+        """)
+        after_authorities = dict(cur.fetchall())
+
+        cur.execute("""
+            SELECT source_column, energy_source_key
+            FROM project_dw.dim_energy_source
+            ORDER BY source_column
+        """)
+        after_sources = dict(cur.fetchall())
+
+        if before_authorities != after_authorities:
+            raise SystemExit("Authority surrogate keys changed")
+
+        if before_sources != after_sources:
+            raise SystemExit("Energy-source surrogate keys changed")
+
+        print("\nSurrogate-key stability: OK")
+
+        # Business-key lookup evidence
         cur.execute("""
             SELECT authority_code, authority_key
             FROM project_dw.dim_balancing_authority
             WHERE authority_code = 'CISO'
         """)
         row = cur.fetchone()
-        print(f"\nCISO lookup: {row if row else 'not found'}")
 
-if total != 783:
-    raise SystemExit("Dimension validation failed")
+        print(f"CISO lookup: {row if row else 'not found'}")
 
 print("\nDONE - dimension loads completed.")
