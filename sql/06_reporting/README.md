@@ -1,15 +1,7 @@
-# Step 5B — Reporting layer
+# Reporting - Mohid
 
-**Owner:** Step 1 owner · **Needs first:** Step 4 facts loaded
+`00_base_views.sql` exposes detail, authority/hour fuel summaries, demand comparison and independently expected hours. `10_business_question_views.sql` implements Q01-Q10. The normal integration and quality runners install both files.
 
-## Your job
-Publish grain-safe views in `project_reporting` that answer the ten business questions (`docs/phase1/03_Business_Questions.pdf`).
+Generation is summarized before demand comparisons. Forecast metrics share one eligibility set; WAPE combines sums. Shares disclose eligible/excluded hours and category versions. Peak timestamps retain ties, absent ratios return NULL and all-null fuels remain visible without zero-fill.
 
-## Rules
-- One view per question or per metric group, named `vw_q01_monthly_demand_energy`, `vw_q02_...` and so on.
-- Always aggregate generation to authority + UTC hour **before** joining to demand (otherwise demand repeats once per fuel).
-- Show units (MW vs MWh) and eligible counts next to every result; ratios with no denominator show `NULL`/N/A.
-- Metric definitions M01–M12 are in `docs/phase1/02_Business_Requirements.pdf`.
-
-## Done when
-Every view runs without error, and Q1 total demand MWh agrees with the Step 5A accuracy check.
+Source locators appear in detail views and aggregated outputs expose version strings and observation counts. Q10 separates absent rows, missing measures and invalid/zero/negative observations. Header availability by source snapshot is retained in the DQ input audit. See root README for the view catalog and controls.

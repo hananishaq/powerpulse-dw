@@ -1,19 +1,14 @@
-# Step 1 — Foundation
+# Setup and consolidated physical SQL
 
-**Owner:** ________ · **Marks:** Database Implementation · **Needs first:** nothing (push this one first)
+Normal command: `python etl/run_all.py --bootstrap`. Bootstrap requires CREATEDB privilege only when the configured database is absent. Existing databases are not dropped.
 
-## Your job
-Give every teammate a working empty database with the three schemas, and prove Python can talk to it.
+For psql:
 
-## Create these files
-- `00_create_database.sql` — create database `powerpulse_dw`.
-- `01_create_schemas.sql` — inside `powerpulse_dw`, create schemas `project_staging`, `project_dw`, `project_reporting` (`CREATE SCHEMA IF NOT EXISTS`).
-- `../../etl/00_test_connection.py` — read `.env` (python-dotenv), connect with psycopg, print the PostgreSQL version and the three schema names.
+```shell
+psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f sql/00_setup/00_create_database.sql
+psql -U postgres -d powerpulse_dw -v ON_ERROR_STOP=1 -f sql/00_setup/10_install_warehouse.psql
+```
 
-## Done when
-- In psql or pgAdmin, `\dn` lists the three schemas.
-- `python etl/00_test_connection.py` prints them.
-- Both scripts can be run twice without errors (`IF NOT EXISTS`).
+The first script uses `\gexec` outside a transaction; override the name with `-v target_db=your_name`. The consolidated entry uses `\ir` and creates structures/views, not data. Both are psql-specific. `01_create_schemas.sql` is ordinary SQL suitable for pgAdmin inside the target database.
 
-## Also yours later (Step 5B)
-`sql/06_reporting/`, `etl/run_all.py`, the final README run order and the `phase2-submission` tag.
+Python reads `.env`; psql needs matching connection options/password prompt. Never commit local credentials or database files.

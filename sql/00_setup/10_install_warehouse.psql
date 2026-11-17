@@ -1,0 +1,11 @@
+-- Consolidated physical database structure. Data loads use etl/run_all.py.
+-- \ir paths are relative to THIS file. This is a psql script, not pgAdmin SQL.
+\set ON_ERROR_STOP on
+\ir 01_create_schemas.sql
+\ir ../01_staging/00_create_staging_tables.sql
+\ir ../02_dw/00_create_dimensions.sql
+\ir ../02_dw/01_create_facts.sql
+\ir ../04_fact_load/00_create_etl_run_log.sql
+\ir ../05_quality/00_create_dq_result_table.sql
+\ir ../06_reporting/00_base_views.sql
+\ir ../06_reporting/10_business_question_views.sql

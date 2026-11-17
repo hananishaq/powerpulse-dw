@@ -1,0 +1,47 @@
+name: Phase 2 warehouse validation
+on:
+  push:
+    branches: [main, 'mohid/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgres-validation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      PGHOST: localhost
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: powerpulse_ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Build from an empty database
+        run: python etl/run_all.py --bootstrap
+      - name: Repeat the pipeline and verify identity stability
+        run: python etl/run_all.py --bootstrap
+      - name: Exercise quality failures and reporting edge cases
+        run: python tests/integration_checks.py
+      - name: Render measured quality report
+        run: python reports/phase2/build_data_quality_report.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase2-quality-evidence
+          path: |
+            reports/phase2/evidence/
+            reports/phase2/Data_Quality_Report.pdf

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "postgresql": "16.4",
+  "clean_build": "PASS (57 baseline checks)",
+  "release_rerun_checks": 68,
+  "integration_tests": 8,
+  "sql_package": "Both database creation and consolidated psql structure scripts exited 0 on initial and repeated execution in powerpulse_sql_package",
+  "checkout_hashes": "All four selected CSV hashes matched after a fresh core.autocrlf=false checkout",
+  "dq_run_id": "a46d6000-cfb0-488e-b00d-8db82c052eec",
+  "pipeline_run_id": "9e915d3d-0c8e-4e72-9711-af0d7ba01ba1"
+}

@@ -1,14 +1,18 @@
-# ETL scripts (Python)
+# ETL and validation
 
-Python orchestrates; the heavy lifting is SQL inside PostgreSQL. Connection settings come from `.env` (copy `.env.example`; never commit `.env`).
+Configure `.env` and run `python etl/run_all.py --bootstrap --report`. Resource paths resolve from the repository rather than the current directory. Do not commit `.env`.
 
-| Script | Step | Owner |
-|---|---|---|
-| `00_test_connection.py` | 1 | Step 1 owner |
-| `01_load_staging.py` | 2 | Step 2 owner |
-| `02_load_dimensions.py` | 3 | Step 3 owner |
-| `03_load_facts.py` | 4 | Step 4 owner |
-| `04_run_quality_checks.py` | 5A | Step 5A owner |
-| `run_all.py` | 5B — runs 01 → 04 in order on a fresh database | Step 1 owner |
+| Script | Responsibility |
+|---|---|
+| `00_test_connection.py` | Mohid: version and schema connectivity |
+| `01_load_staging.py` | Qasim: import, cleaning and optional dirty-data self-test |
+| `02_load_dimensions.py` | Emaad: five dimension loads |
+| `03_load_facts.py` | Muaz: facts and original fact-step logs |
+| `04_run_quality_checks.py` | Mohid: independent source audit, reporting and quality gate |
+| `run_all.py` | Integration wrapper, stage logs, identity checks and optional PDF |
+| `source_evidence.py` | Independent CSV parser and frozen coverage |
+| `common.py` | Connection and evidence helpers |
 
-Each script must be safe to run twice.
+Run again to verify stable identities. Quality negative tests use scratch data by default; `--skip-negative-tests` gives a baseline-only audit. `python tests/integration_checks.py` exercises rolled-back mutations and reporting edge cases. Evidence is exported to `reports/phase2/evidence/`.
+
+The normal runner never executes staging dirty-row injection files. This is a frozen-baseline integration; upstream revision/quarantine/counter limitations remain documented in `docs/phase2/MOHID_IMPLEMENTATION.md`.

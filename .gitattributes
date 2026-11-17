@@ -1,0 +1,12 @@
+# The acquisition manifest hashes delivered CRLF extracts byte for byte.
+# Keep checkout bytes consistent on Windows and Linux; the index stays LF.
+data_acquisition/data/*.csv text eol=crlf
+
+*.py text eol=lf
+*.sql text eol=lf
+*.psql text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.pdf binary
+*.xlsx binary
+*.png binary
