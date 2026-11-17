@@ -1,0 +1,22 @@
+{
+  "method": "Fresh Git checkout with core.autocrlf=false and committed .gitattributes",
+  "status": "PASS",
+  "files": [
+    {
+      "file": "EIA930_BALANCE_2024_Jan_Jun_selected.csv",
+      "passed": true
+    },
+    {
+      "file": "EIA930_BALANCE_2024_Jul_Dec_selected.csv",
+      "passed": true
+    },
+    {
+      "file": "EIA930_BALANCE_2025_Jan_Jun_selected.csv",
+      "passed": true
+    },
+    {
+      "file": "EIA930_BALANCE_2025_Jul_Dec_selected.csv",
+      "passed": true
+    }
+  ]
+}

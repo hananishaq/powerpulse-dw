@@ -1,0 +1,116 @@
+{
+  "run_id": "9e915d3d-0c8e-4e72-9711-af0d7ba01ba1",
+  "started_at": "2026-11-17T17:49:29.498230+00:00",
+  "source_commit": "cab5d767cdc1b869de903c2bb19a6ecc78755a85",
+  "status": "PASS",
+  "steps": [
+    {
+      "name": "database_bootstrap",
+      "started_at": "2026-11-17T17:49:29.544777+00:00",
+      "status": "PASS",
+      "completed_at": "2026-11-17T17:49:29.612558+00:00"
+    },
+    {
+      "name": "physical_schema",
+      "started_at": "2026-11-17T17:49:36.488280+00:00",
+      "status": "PASS",
+      "completed_at": "2026-11-17T17:49:36.588589+00:00"
+    },
+    {
+      "name": "connection_test",
+      "started_at": "2026-11-17T17:49:36.589604+00:00",
+      "status": "PASS",
+      "output": "PostgreSQL 16.4, compiled by Visual C++ build 1940, 64-bit\nSchemas: project_dw, project_reporting, project_staging\n",
+      "completed_at": "2026-11-17T17:49:37.683494+00:00"
+    },
+    {
+      "name": "source_import_and_cleaning",
+      "started_at": "2026-11-17T17:49:37.684492+00:00",
+      "status": "PASS",
+      "output": "1) Creating staging objects\n  running sql\\01_staging\\00_create_staging_tables.sql\n2) Loading reference data and manifest\n  stg_authority_reference : 5 rows\n  stg_energy_source_mapping: 19 rows\n  stg_source_file         : 4 rows\n3) Loading the four EIA-930 CSVs into the raw table\n  EIA930_BALANCE_2024_Jan_Jun_selected.csv: 46 columns, 9 reported fuel columns, 10 absent -> NULL\n    loaded 21,835 rows\n  EIA930_BALANCE_2024_Jul_Dec_selected.csv: 67 columns, 16 reported fuel columns, 3 absent -> NULL\n    loaded 22,085 rows\n  EIA930_BALANCE_2025_Jan_Jun_selected.csv: 67 columns, 16 reported fuel columns, 3 absent -> NULL\n    loaded 21,715 rows\n  EIA930_BALANCE_2025_Jul_Dec_selected.csv: 67 columns, 16 reported fuel columns, 3 absent -> NULL\n    loaded 22,085 rows\n4) Reconciling against the manifest\n\n  Raw rows per file vs manifest\n  file                                  manifest    loaded  status\n  EIA930_BALANCE_2024_Jan_Jun.csv         21,835    21,835  OK\n  EIA930_BALANCE_2024_Jul_Dec.csv         22,085    22,085  OK\n  EIA930_BALANCE_2025_Jan_Jun.csv         21,715    21,715  OK\n  EIA930_BALANCE_2025_Jul_Dec.csv         22,085    22,085  OK\n  TOTAL                                   87,720    87,720  OK   (rows with unknown source file: 0)\n5) Cleaning raw -> typed clean table\n  running sql\\01_staging\\10_clean_staging.sql\n\n  Cleaning result\n  stg_eia930_balance_clean : 87,720 rows\n  rows rejected            : 0\n  cell values set to NULL  : 0\n\n  Cleaning log (rule, scope, before -> after, affected)\n  C01  EIA930_BALANCE_2024_Jan_Jun.csv            21835 ->     21835   affected 0\n  C01  EIA930_BALANCE_2024_Jul_Dec.csv            22085 ->     22085   affected 0\n  C01  EIA930_BALANCE_2025_Jan_Jun.csv            21715 ->     21715   affected 0\n  C01  EIA930_BALANCE_2025_Jul_Dec.csv            22085 ->     22085   affected 0\n  C01  ALL                                        87720 ->     87720   affected 0\n  C02  ALL                                        87720 ->     87720   affected 0\n  C03  ALL                                        87720 ->     87720   affected 0\n  C04  ALL                                        87720 ->     87720   affected 0\n  C05  ALL                                        87720 ->     87720   affected 0\n  C06  ALL                                        87720 ->     87720   affected 0\n  C07  ALL                                        87720 ->     87720   affected 523609\n  C08  ALL                                       815222 ->    815222   affected 31007\n  C09  ALL                                        87720 ->     87720   affected 0\n  C10  ALL                                       727720 ->    727720   affected 0\n  C11  ALL                                        87720 ->     87720   affected 0\n\nDONE - all counts reconciled.\n",
+      "completed_at": "2026-11-17T17:50:12.684172+00:00"
+    },
+    {
+      "name": "dimensions",
+      "started_at": "2026-11-17T17:50:12.686654+00:00",
+      "status": "PASS",
+      "output": "Running sql\\03_dimension_load\\10_load_dim_hour.sql\nRunning sql\\03_dimension_load\\11_load_dim_date.sql\nRunning sql\\03_dimension_load\\12_load_dim_balancing_authority.sql\nRunning sql\\03_dimension_load\\13_load_dim_energy_source.sql\nRunning sql\\03_dimension_load\\14_load_dim_source_snapshot.sql\n\nDimension counts\ndim_hour                       24  OK\ndim_date                      731  OK\ndim_balancing_authority         5  OK\ndim_energy_source              19  OK\ndim_source_snapshot             4  OK\nTOTAL                         783  OK\n\nCISO lookup: ('CISO', 1)\n\nDONE - dimension loads completed.\n",
+      "completed_at": "2026-11-17T17:50:13.972090+00:00"
+    },
+    {
+      "name": "facts",
+      "started_at": "2026-11-17T17:50:13.973098+00:00",
+      "status": "PASS",
+      "output": "Running sql\\04_fact_load\\10_load_fact_hourly_demand.sql\nRunning sql\\04_fact_load\\20_load_fact_hourly_generation.sql\nRunning sql\\04_fact_load\\30_build_expected_hour_grid.sql\nRunning sql\\04_fact_load\\40_create_fk_indexes.sql\n\nFact validation\nfact_hourly_demand          87720  OK\nfact_hourly_generation     727720  OK\nexpected_hour_grid           87720  OK\nNULL foreign keys                0  OK\nMissing expected hours           0  OK\n\nDONE - fact loads completed.\n",
+      "completed_at": "2026-11-17T17:52:05.156116+00:00"
+    },
+    {
+      "name": "quality_and_reporting",
+      "started_at": "2026-11-17T17:52:15.168928+00:00",
+      "status": "PASS",
+      "completed_at": "2026-11-17T17:52:54.753099+00:00"
+    }
+  ],
+  "identity_fingerprints_before": {
+    "date": {
+      "rows": 731,
+      "sha256": "946f12527c8f7948d4cbdf4747741cba4f38c67590cf6d60d9d9e64e56985bc0"
+    },
+    "hour": {
+      "rows": 24,
+      "sha256": "1e488a29c4c6e83a007866d5616030f7f6c51256141d5e1675d434f950dd7b80"
+    },
+    "authority": {
+      "rows": 5,
+      "sha256": "1972095dc192339356162881f9d194cc6ca31317b7348bb5001e4026888d200d"
+    },
+    "fuel": {
+      "rows": 19,
+      "sha256": "046b2410ef7f0b641bb37e1493a5ed3741421e385e272d119ce465c6189e1227"
+    },
+    "snapshot": {
+      "rows": 4,
+      "sha256": "1f63ee193d92a2416ccfd8be16a77a7b95e3db88de8d27ac7b2f4d62236fe497"
+    },
+    "demand": {
+      "rows": 87720,
+      "sha256": "f34ba1c9e014d6489b8343e0efb86e9f99b3a266191a6ff63238ad8a43278065"
+    },
+    "generation": {
+      "rows": 727720,
+      "sha256": "d7ef321c9fea2d9d8c16efade9da1a27a31f9c0378bd11f72190bab1af5a4bdd"
+    }
+  },
+  "identity_fingerprints_after": {
+    "date": {
+      "rows": 731,
+      "sha256": "946f12527c8f7948d4cbdf4747741cba4f38c67590cf6d60d9d9e64e56985bc0"
+    },
+    "hour": {
+      "rows": 24,
+      "sha256": "1e488a29c4c6e83a007866d5616030f7f6c51256141d5e1675d434f950dd7b80"
+    },
+    "authority": {
+      "rows": 5,
+      "sha256": "1972095dc192339356162881f9d194cc6ca31317b7348bb5001e4026888d200d"
+    },
+    "fuel": {
+      "rows": 19,
+      "sha256": "046b2410ef7f0b641bb37e1493a5ed3741421e385e272d119ce465c6189e1227"
+    },
+    "snapshot": {
+      "rows": 4,
+      "sha256": "1f63ee193d92a2416ccfd8be16a77a7b95e3db88de8d27ac7b2f4d62236fe497"
+    },
+    "demand": {
+      "rows": 87720,
+      "sha256": "f34ba1c9e014d6489b8343e0efb86e9f99b3a266191a6ff63238ad8a43278065"
+    },
+    "generation": {
+      "rows": 727720,
+      "sha256": "d7ef321c9fea2d9d8c16efade9da1a27a31f9c0378bd11f72190bab1af5a4bdd"
+    }
+  },
+  "dq_run_id": "a46d6000-cfb0-488e-b00d-8db82c052eec",
+  "completed_at": "2026-11-17T17:52:54.754114+00:00"
+}

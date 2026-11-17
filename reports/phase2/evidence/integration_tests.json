@@ -1,0 +1,47 @@
+{
+  "completed_at": "2026-11-17T17:53:44.930375+00:00",
+  "source_commit": "ab7a0c6f5087f1058eba955d978e4aa6f8d91906",
+  "status": "PASS",
+  "tests": [
+    {
+      "name": "Demand corruption fails row-level accuracy and reporting totals",
+      "passed": true,
+      "detail": "['demand_energy_difference_mwh', 'q01_energy_difference', 'source_to_demand_fact']"
+    },
+    {
+      "name": "Missing reported fuel observation is detected",
+      "passed": true,
+      "detail": "['source_to_generation_fact']"
+    },
+    {
+      "name": "Missing boundary demand hour fails completeness",
+      "passed": true,
+      "detail": "['demand_count', 'missing_expected_hours']"
+    },
+    {
+      "name": "Monthly peak preserves every tied UTC hour",
+      "passed": true,
+      "detail": "True"
+    },
+    {
+      "name": "No eligible forecast pairs yields NULL metrics",
+      "passed": true,
+      "detail": "True"
+    },
+    {
+      "name": "Zero total generation is excluded from wind/solar shares",
+      "passed": true,
+      "detail": "True"
+    },
+    {
+      "name": "All-null fuel categories are visible without zero-fill",
+      "passed": true,
+      "detail": "True"
+    },
+    {
+      "name": "All mutations rolled back; baseline passes again",
+      "passed": true,
+      "detail": "True"
+    }
+  ]
+}
