@@ -24,7 +24,7 @@ conformed dimensions. Source: official EIA bulk CSVs — no synthetic data.
 |---|---|---|
 | 1 | Business analysis & dimensional design (30%) | ✅ Complete — see `docs/phase1/` |
 | 2 | Physical DW implementation & ETL pipeline (40%) | 🔧 In progress — task board `docs/phase2/TASKS.md`, plan `docs/phase2/PHASE2_PLAN.md` |
-| 3 | OLAP analytics, performance & BI (30%) | Mohid's Q01/Q02 and Executive Overview source implemented; team integration pending — [run guide](docs/phase3/README.md) |
+| 3 | OLAP analytics, performance & BI (30%) | Mohid's contribution complete: Q01/Q02, populated Executive Overview PBIX, PDF and handoff; team integration pending — [run guide](docs/phase3/README.md) |
 
 ## Measured source facts (Phase 1 evidence)
 
@@ -73,8 +73,11 @@ EIA files, see `data_acquisition/README.md`.
 ## Phase 3 demand analytics
 
 After loading Phase 2, run `python etl/05_run_phase3_mohid.py` to create and
-reconcile Mohid's reporting views. Analytical queries are in
+reconcile Mohid's reporting views. To build from an empty configured database,
+run `python etl/run_all.py --phase3 --refresh-bi-snapshot`. Analytical queries are in
 `sql/07_phase3_analytics/p1_q01_q02.sql`. The editable Executive Overview
-project is `bi/phase3/mohid/PowerPulse_Overview.pbip`; credentials and refresh
-remain local. See the [Phase 3 guide](docs/phase3/README.md) for contracts,
+source project is `bi/phase3/mohid/PowerPulse_Overview.pbip`. Open the companion
+`PowerPulse_Overview.pbix` to view the populated report in Snapshot mode without
+credentials. Warehouse mode supports a live local connection. See the
+[Phase 3 guide](docs/phase3/README.md) for contracts,
 validation evidence, Power BI integration and the remaining team checklist.

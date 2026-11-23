@@ -5,22 +5,27 @@ Owner: Mohid. Integrator: Emaad.
 The editable source project is
 [`mohid/PowerPulse_Overview.pbip`](mohid/PowerPulse_Overview.pbip). Its PBIR report
 and TMSL `model.bim` are deliberately source-controlled as text. They define a
-real report page, queries, DAX measures and relationships. Emaad should integrate
-this page into the final three-page `PowerPulse_Phase3.pbix`.
+real report page, queries, DAX measures and relationships. The companion
+`mohid/PowerPulse_Overview.pbix` is the populated personal deliverable.
+Emaad can integrate this completed page into the final three-page team PBIX.
 
 ## Open and refresh
 
-1. Build the existing Phase 2 warehouse and run
-   `python etl/05_run_phase3_mohid.py` from the repository root.
-2. Open the PBIP in a current Power BI Desktop version that supports PBIR.
-3. In Transform data / Edit parameters, set `PgServer` (default `localhost`)
-   and `PgDatabase` (default `powerpulse_dw`) to the warehouse.
-4. Supply database credentials locally in Data source settings. No password is
-   stored in the project. Refresh all three tables. An empty project cache on
-   first open is expected because caches are not committed.
-5. Match the cards against the SQL below. Save locally and then copy the page
-   into Emaad's final report using the same table/measure names, or migrate
-   the PBIR page after integrating the model definitions.
+1. Open `mohid/PowerPulse_Overview.pbix` to view the populated overview directly.
+   It defaults to **Snapshot** mode and requires no database credentials.
+2. The PBIP is the editable text source. Open it in a Desktop version supporting
+   PBIR and choose Refresh to load its embedded verified reporting snapshot.
+3. To use a live warehouse, change `DataMode` to **Warehouse**, set `PgServer`
+   and `PgDatabase`, and supply credentials locally. The default live target is
+   `localhost` / `powerpulse_dw`. This optional mode never embeds passwords.
+4. To regenerate the snapshot from your warehouse, run
+   `python etl/05_run_phase3_mohid.py --refresh-bi-snapshot`. It reconciles the
+   views first and captures all authority-months in a repeatable-read transaction,
+   regardless of optional CSV export filters. Reopen/refresh the PBIP afterward
+   and save the PBIX if you want its cached data updated as well.
+5. The page visibly labels Snapshot versus Warehouse mode. Snapshot metadata
+   records its generation time, view SQL hash and source snapshot hashes.
+   It is a portable result of the validated SQL, not an automatically live feed.
 
 Microsoft format references:
 [PBIP](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview),
@@ -29,7 +34,7 @@ Microsoft format references:
 
 ## Model contract
 
-Import mode. `MonthlyDemand` imports selected columns from
+Import mode. In Warehouse mode, `MonthlyDemand` imports selected columns from
 `project_reporting.vw_authority_analysis`. `Month` imports distinct month rows
 from Q01; `Authority` imports the existing balancing-authority dimension.
 Both dimensions filter MonthlyDemand through single-direction one-to-many
@@ -38,7 +43,9 @@ by `month_start`. Automatic date hierarchies are unnecessary.
 
 All authoritative DAX is embedded in `MonthlyDemand.measures` in `model.bim`.
 Reporting Authorities counts fact keys with observed rows, not all dimension
-members. Coverage and mean demand divide additive components. Forecast WAPE
+members. A disconnected hidden `DataContext` table provides the data-mode label.
+Snapshot mode imports the same columns from the verified embedded results.
+Coverage and mean demand divide additive components. Forecast WAPE
 recomputes from sums. The SQL percent fields use 0-100; DAX percentage measures
 use 0-1 and percentage formatting. Do not multiply these DAX measures by 100.
 

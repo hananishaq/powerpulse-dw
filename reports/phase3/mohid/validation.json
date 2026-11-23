@@ -1,6 +1,6 @@
 {
   "tested_date": "2026-11-23",
-  "runtime": "PostgreSQL 19.0 (PGlite 0.6.0) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a), 32-bit",
+  "runtime": "PostgreSQL 16.11, compiled by Visual C++ build 1944, 64-bit",
   "source_commit": "27edc12134580c74184ebbfea0894cc8922e53ee",
   "monthly_groups": 120,
   "hourly_groups": 2880,
@@ -183,11 +183,13 @@
       "Read-only repeatable-read export",
       "Three CSV files with expected single result row",
       "Invalid month boundaries rejected before connection"
-    ]
+    ],
+    "native_full_baseline_passed": true,
+    "snapshot_regeneration_passed": true
   },
   "power_bi": {
     "schema_validated_files": 21,
-    "model_tables": 3,
+    "model_tables": 4,
     "visuals": 12,
     "checks": [
       "Microsoft PBIR/PBIP/PBISM JSON schemas",
@@ -196,9 +198,106 @@
       "All visuals within 1280x720 canvas"
     ],
     "power_bi_desktop_opened": true,
-    "native_observation": "Executive Overview page, slicers, cards, line chart and three model tables opened successfully in installed Power BI Desktop. DAX measures compiled and blank/zero states rendered before refresh.",
-    "refresh_completed": false,
-    "refresh_requirement": "Local PostgreSQL database credentials and completed warehouse. No user credentials were entered. Check populated visuals and slicer totals after refresh."
+    "native_observation": "Final model refreshed successfully using the normal Power BI Desktop Refresh command in Snapshot mode. All three KPIs, monthly trend, period and coverage rendered with populated results. Saved as a native PBIX.",
+    "refresh_completed": true,
+    "refresh_requirement": "No credentials needed in Snapshot mode. Optional Warehouse mode requires local PostgreSQL credentials.",
+    "native_filter_acceptance": {
+      "passed": true,
+      "selections": 7,
+      "checks": [
+        {
+          "selection": "2024",
+          "passed": true,
+          "metrics": {
+            "Energy": 1763112353.0,
+            "Hours": 43920,
+            "Authorities": 5,
+            "Coverage": 0.9978369763205829,
+            "WAPE": 0.035177788222699936,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "2025",
+          "passed": true,
+          "metrics": {
+            "Energy": 1816431180.0,
+            "Hours": 43800,
+            "Authorities": 5,
+            "Coverage": 0.9971917808219178,
+            "WAPE": 0.03660467729673767,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "ciso_feb",
+          "passed": true,
+          "metrics": {
+            "Energy": 15928392.0,
+            "Hours": 696,
+            "Authorities": 1,
+            "Coverage": 1.0,
+            "WAPE": 0.0650645087087259,
+            "Growth": -0.08937453495814159,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "ciso_jan",
+          "passed": true,
+          "metrics": {
+            "Energy": 17491705.0,
+            "Hours": 744,
+            "Authorities": 1,
+            "Coverage": 1.0,
+            "WAPE": 0.059102814734184,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "empty",
+          "passed": true,
+          "metrics": {
+            "Energy": null,
+            "Hours": 0,
+            "Authorities": 0,
+            "Coverage": null,
+            "WAPE": null,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "full",
+          "passed": true,
+          "metrics": {
+            "Energy": 3579543533.0,
+            "Hours": 87720,
+            "Authorities": 5,
+            "Coverage": 0.997514819881441,
+            "WAPE": 0.03590155543929013,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        },
+        {
+          "selection": "noncontiguous",
+          "passed": true,
+          "metrics": {
+            "Energy": 285523000.0,
+            "Hours": 7435,
+            "Authorities": 5,
+            "Coverage": 0.9970410221923336,
+            "WAPE": 0.03483124843211178,
+            "Growth": null,
+            "Mode": "Data: Snapshot verified 2026-11-23 | Five balancing authorities"
+          }
+        }
+      ]
+    }
   },
   "presentation": {
     "slides": 2,
@@ -213,9 +312,117 @@
     "opened_in_powerpoint": false
   },
   "boundaries": [
-    "SQL uses PostgreSQL 16-compatible constructs, executed here on PostgreSQL 19.0 WASM/PGlite 0.6.0, not a native PostgreSQL 16 server.",
-    "A teammate must run the reproducible scripts on the actual warehouse and check Power BI measures after entering local credentials.",
-    "No full Phase 2 generation/quality certification or other students work is claimed.",
-    "Instructor rubric mapping approval and teammate review are not claimed."
-  ]
+    "This completes Mohid's personal contribution; other students' OLAP, optimization, generation analytics and final team assembly are not claimed complete.",
+    "Snapshot is a frozen result of validated warehouse views and is visibly labeled. Warehouse mode supports refresh against a configured PostgreSQL connection with local credentials.",
+    "No instructor approval or human teammate review is claimed."
+  ],
+  "initial_sql_runtime": "PostgreSQL 19.0 (PGlite 0.6.0) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a), 32-bit",
+  "native_postgresql": {
+    "runtime": "PostgreSQL 16.11, compiled by Visual C++ build 1944, 64-bit",
+    "counts": {
+      "dim_date": 731,
+      "dim_hour": 24,
+      "dim_balancing_authority": 5,
+      "dim_energy_source": 19,
+      "dim_source_snapshot": 4,
+      "fact_hourly_demand": 87720,
+      "fact_hourly_generation": 727720,
+      "expected_hour_grid": 87720
+    },
+    "pipeline_clean_run": true,
+    "pipeline_second_run": true,
+    "authority_keys_stable": true,
+    "cases": {
+      "full": {
+        "energy_mwh": 3579543533.0,
+        "observed_hours": 87720.0,
+        "authorities": 5.0,
+        "eligible_hours": 87502.0,
+        "abs_error_sum_mw": 128410021.0,
+        "eligible_actual_sum_mw": 3576725839.0
+      },
+      "2024": {
+        "energy_mwh": 1763112353.0,
+        "observed_hours": 43920.0,
+        "authorities": 5.0,
+        "eligible_hours": 43825.0,
+        "abs_error_sum_mw": 62000411.0,
+        "eligible_actual_sum_mw": 1762487471.0
+      },
+      "2025": {
+        "energy_mwh": 1816431180.0,
+        "observed_hours": 43800.0,
+        "authorities": 5.0,
+        "eligible_hours": 43677.0,
+        "abs_error_sum_mw": 66409610.0,
+        "eligible_actual_sum_mw": 1814238368.0
+      },
+      "ciso_jan": {
+        "energy_mwh": 17491705.0,
+        "observed_hours": 744.0,
+        "authorities": 1.0,
+        "eligible_hours": 744.0,
+        "abs_error_sum_mw": 1033809.0,
+        "eligible_actual_sum_mw": 17491705.0
+      },
+      "noncontiguous": {
+        "energy_mwh": 285523000.0,
+        "observed_hours": 7435.0,
+        "authorities": 5.0,
+        "eligible_hours": 7413.0,
+        "abs_error_sum_mw": 9942359.0,
+        "eligible_actual_sum_mw": 285443659.0
+      },
+      "empty": {
+        "energy_mwh": null,
+        "observed_hours": null,
+        "authorities": 0.0,
+        "eligible_hours": null,
+        "abs_error_sum_mw": null,
+        "eligible_actual_sum_mw": null
+      }
+    },
+    "source_snapshots": [
+      [
+        "EIA930_BALANCE_2024_Jan_Jun.csv",
+        "26768c495c3ba987e29d79df2e40d4e741f9dbcff086f53c12ff774465756a10"
+      ],
+      [
+        "EIA930_BALANCE_2024_Jul_Dec.csv",
+        "a602a8e577cfdd2fa3083413eaa4dd8ba7f0d2b26a2986f8f6d22917465ea49f"
+      ],
+      [
+        "EIA930_BALANCE_2025_Jan_Jun.csv",
+        "fac4bb991dfa1dab3b4b35300ccab54ac99be13a40ce91954db8ddafb2816242"
+      ],
+      [
+        "EIA930_BALANCE_2025_Jul_Dec.csv",
+        "1146158b972439db7c7f4cc7d0491e07644ddbf244d03b8ecb44cb2c833d10f1"
+      ]
+    ],
+    "exported_views": 3
+  },
+  "completion": {
+    "personal_scope_complete": true,
+    "completed_date": "2026-11-23",
+    "normal_desktop_refresh_verified": true,
+    "snapshot_rows": 120,
+    "snapshot_source_hash_verified": true,
+    "pdf_pages": 1,
+    "pdf_render_visually_checked": true,
+    "artifacts": {
+      "bi/phase3/mohid/PowerPulse_Overview.pbix": {
+        "bytes": 65355,
+        "sha256": "493d719e549a0bcbd1371e42fe9118e88aa85b02ee56c15a30c8df256cc39bd0"
+      },
+      "reports/phase3/mohid/Executive_Overview.pdf": {
+        "bytes": 106445,
+        "sha256": "9723069c2a6d36b230051cb06d05546192808bcf6eebfbb7531f10230d92c57b"
+      },
+      "presentation/phase3/mohid_demand_overview.pptx": {
+        "bytes": 30756,
+        "sha256": "b365d2a44e75db2be89702b34c34462396f5714fc304a1a625c2a54b11559889"
+      }
+    }
+  }
 }

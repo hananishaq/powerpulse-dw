@@ -121,7 +121,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12"
+                  "Value": "12D"
                 }
               }
             },

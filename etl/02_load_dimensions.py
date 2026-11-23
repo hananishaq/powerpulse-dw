@@ -98,10 +98,13 @@ with psycopg.connect(**connection) as conn:
         """)
         after_sources = dict(cur.fetchall())
 
-        if before_authorities != after_authorities:
+        # First loads add members; previously assigned keys must stay stable.
+        if any(after_authorities.get(code) != key
+               for code, key in before_authorities.items()):
             raise SystemExit("Authority surrogate keys changed")
 
-        if before_sources != after_sources:
+        if any(after_sources.get(source) != key
+               for source, key in before_sources.items()):
             raise SystemExit("Energy-source surrogate keys changed")
 
         print("\nSurrogate-key stability: OK")

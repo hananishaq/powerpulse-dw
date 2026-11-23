@@ -3,32 +3,60 @@
   "name": "scope",
   "position": {
     "x": 28,
-    "y": 72,
+    "y": 68,
     "z": 1,
     "width": 1224,
-    "height": 30,
+    "height": 40,
     "tabOrder": 1
   },
   "visual": {
-    "visualType": "textbox",
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyDemand"
+                    }
+                  },
+                  "Property": "Data Mode Note"
+                }
+              },
+              "queryRef": "MonthlyDemand.Data Mode Note",
+              "nativeQueryRef": "Data Mode Note"
+            }
+          ]
+        }
+      }
+    },
     "objects": {
-      "general": [
+      "labels": [
         {
           "properties": {
-            "paragraphs": [
-              {
-                "textRuns": [
-                  {
-                    "value": "Observed electricity demand across five balancing authorities",
-                    "textStyle": {
-                      "fontFamily": "Segoe UI",
-                      "fontSize": "13pt",
-                      "color": "#526777"
-                    }
-                  }
-                ]
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
               }
-            ]
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]

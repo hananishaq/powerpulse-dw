@@ -54,7 +54,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12"
+                  "Value": "12D"
                 }
               }
             },
@@ -80,7 +80,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "26"
+                  "Value": "26D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
                 }
               }
             },

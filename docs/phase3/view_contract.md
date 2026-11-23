@@ -12,6 +12,11 @@ SQL targets PostgreSQL 16+. All names are in `project_reporting`.
 | `vw_q02_hourly_profile` | authority + operating month + local hour | Q02/M02 profile with additive components |
 | `vw_authority_analysis` | authority + operating month | Demand and forecast components with documented planning segments |
 
+The generic handout names `vw_monthly_sales` and `vw_customer_analysis` are
+also supplied as compatibility aliases of Q01 and authority analysis. They
+retain electricity columns and units. `vw_product_performance` belongs to the
+generation owner's contribution and is not fabricated here.
+
 `authority_key` is the warehouse surrogate key. `authority_code` is the BA code.
 `month_start` is a PostgreSQL DATE for the first day of the source operating
 month. `year_month` is `YYYY-MM`, never a month name without its year.

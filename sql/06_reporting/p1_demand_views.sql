@@ -145,3 +145,13 @@ COMMENT ON VIEW project_reporting.vw_q02_hourly_profile IS
     'Q02/M02. Local-hour profile by authority/month. Roll up demand_sum_mw / eligible_demand_hours, never AVG(group means).';
 COMMENT ON VIEW project_reporting.vw_authority_analysis IS
     'Authority/month planning bands with M04-M07 forecast components. Thresholds are project choices. Recompute rates from sums after filtering.';
+
+-- Preserve the generic lab's required view names without inventing retail data.
+CREATE OR REPLACE VIEW project_reporting.vw_monthly_sales AS
+SELECT * FROM project_reporting.vw_q01_monthly_demand_energy;
+CREATE OR REPLACE VIEW project_reporting.vw_customer_analysis AS
+SELECT * FROM project_reporting.vw_authority_analysis;
+COMMENT ON VIEW project_reporting.vw_monthly_sales IS
+    'Lab-name compatibility alias of Q01: electricity demand MWh, not monetary revenue.';
+COMMENT ON VIEW project_reporting.vw_customer_analysis IS
+    'Lab-name compatibility alias: balancing-authority/month analysis, not individual customers.';

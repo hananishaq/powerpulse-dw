@@ -5,15 +5,83 @@ Does not rebuild Phase 2 or change warehouse data. Credentials stay in .env.
 Example: python etl/05_run_phase3_mohid.py --export-dir reports/phase3/mohid/results
 """
 import argparse
+import base64
 import csv
+import hashlib
+import json
 import os
-from datetime import date
+import re
+import zlib
+from datetime import date, datetime, timezone
+from decimal import Decimal
 from pathlib import Path
 
 import psycopg
 from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def refresh_bi_snapshot(conn):
+    """Embed validated reporting outputs for a portable, explicitly labeled BI mode.
+
+    Always captures the full warehouse scope, independent of CLI export filters.
+    The alternative Warehouse mode continues to use the PostgreSQL connector.
+    """
+    model_path = ROOT / 'bi/phase3/mohid/PowerPulse_Overview.SemanticModel/model.bim'
+    definition = json.loads(model_path.read_text(encoding='utf-8'))
+    tables = {t['name']: t for t in definition['model']['tables']}
+    payload = {}
+    sources = {
+        'monthly': ('MonthlyDemand', 'project_reporting.vw_authority_analysis'),
+        'months': ('Month', 'project_reporting.vw_q01_monthly_demand_energy'),
+        'authorities': ('Authority', 'project_dw.dim_balancing_authority'),
+    }
+    for key, (table, view) in sources.items():
+        columns = [c['sourceColumn'] for c in tables[table]['columns']]
+        fields = psycopg.sql.SQL(', ').join(map(psycopg.sql.Identifier, columns))
+        query = psycopg.sql.SQL('SELECT DISTINCT {} FROM {}.{} ORDER BY {}').format(
+            fields, *map(psycopg.sql.Identifier, view.split('.')), fields)
+        with conn.cursor() as cur:
+            cur.execute(query)
+            payload[key] = [dict(zip(columns, row)) for row in cur.fetchall()]
+    with conn.cursor() as cur:
+        cur.execute('SELECT file_name, sha256 FROM project_dw.dim_source_snapshot '
+                    'ORDER BY file_name, sha256')
+        snapshots = [dict(zip(('file_name', 'sha256'), row)) for row in cur.fetchall()]
+    payload['metadata'] = {
+        'generated_at_utc': datetime.now(timezone.utc).isoformat(),
+        'basis': 'Validated project_reporting views; full warehouse selection',
+        'view_sql_sha256': hashlib.sha256(
+            (ROOT / 'sql/06_reporting/p1_demand_views.sql').read_bytes()).hexdigest(),
+        'source_snapshots': snapshots,
+    }
+
+    def encode(value):
+        if isinstance(value, (date, datetime)):
+            return value.isoformat()
+        if isinstance(value, Decimal):
+            return int(value) if value == value.to_integral_value() else float(value)
+        raise TypeError(type(value).__name__)
+
+    packed = json.dumps(payload, default=encode, separators=(',', ':')).encode('utf-8')
+    compressor = zlib.compressobj(level=9, wbits=-15)
+    data = base64.b64encode(compressor.compress(packed) + compressor.flush()).decode('ascii')
+    # Embed the verified data in the partitions, like Desktop's Enter Data
+    # format. Shared expressions remain ordinary scalar connection parameters.
+    for table in definition['model']['tables']:
+        for partition in table['partitions']:
+            source = partition['source']
+            expression = '\n'.join(source['expression'])
+            expression, replacements = re.subn(
+                r'Binary\.FromText\("[^"]*", BinaryEncoding\.Base64\)',
+                'Binary.FromText("' + data + '", BinaryEncoding.Base64)', expression)
+            if replacements != 1:
+                raise ValueError(f'Expected one snapshot literal in {table["name"]}')
+            source['expression'] = expression.splitlines()
+    model_path.write_text(json.dumps(definition, indent=2) + '\n', encoding='utf-8')
+    print(f'Embedded verified BI snapshot: {len(payload["monthly"])} authority-months, '
+          f'{len(payload["months"])} months, {len(payload["authorities"])} authorities')
 
 
 def main():
@@ -23,6 +91,8 @@ def main():
                         help='Exclusive end month')
     parser.add_argument('--authority', action='append', help='Repeat for multiple BA codes')
     parser.add_argument('--export-dir', type=Path, help='Optional CSV output; not required to install views')
+    parser.add_argument('--refresh-bi-snapshot', action='store_true',
+                        help='Embed full validated reporting outputs in the portable BI project')
     args = parser.parse_args()
     if args.from_month.day != 1 or args.to_month.day != 1 or args.from_month >= args.to_month:
         parser.error('Use first-of-month dates and from-month < to-month')
@@ -73,6 +143,8 @@ def main():
                                 writer.writerow([col.name for col in cur.description])
                                 writer.writerows(rows)
                             print(f'Exported {target}')
+                if args.refresh_bi_snapshot:
+                    refresh_bi_snapshot(conn)
     except psycopg.Error as error:
         # Do not echo connection strings or configuration values.
         raise SystemExit(f'Phase 3 failed ({error.sqlstate or "connection"}): '
