@@ -1,0 +1,131 @@
+{
+  "owner": "Hanan Ishaq",
+  "roll_number": "24L-2537",
+  "reviewer": "Muaz Fahad",
+  "tested_date": "2026-11-24",
+  "branch": "phase3/p2-olap-profiles",
+  "database": "powerpulse_dw",
+  "runtime": "PostgreSQL 18.6",
+  "phase2_readiness": {
+    "schemas": [
+      "project_staging",
+      "project_dw",
+      "project_reporting"
+    ],
+    "counts": {
+      "dim_date": 731,
+      "dim_hour": 24,
+      "dim_balancing_authority": 5,
+      "dim_energy_source": 19,
+      "dim_source_snapshot": 4,
+      "fact_hourly_demand": 87720,
+      "fact_hourly_generation": 727720,
+      "expected_hour_grid": 87720
+    },
+    "table_structures_match_ddl": true,
+    "duplicate_demand_grains": 0,
+    "duplicate_generation_grains": 0,
+    "null_foreign_keys": 0,
+    "orphan_foreign_keys": 0,
+    "grid_missing_demand_hours": 0,
+    "demand_hours_outside_grid": 0,
+    "dst": {
+      "repeated_authority_local_groups": 10,
+      "rows_in_repeated_groups": 20,
+      "distinct_utc_instants_per_group": 2,
+      "invalid_utc_local_offset_rows": 0,
+      "utc_offset_minutes": [-480, -420, -360, -300, -240]
+    }
+  },
+  "reporting_views": {
+    "vw_q03_monthly_peaks": {
+      "installed": true,
+      "rows": 120,
+      "authority_months": 120,
+      "authority_months_with_natural_ties": 0,
+      "maximum_natural_tie_count": 1,
+      "null_peak_rows": 0,
+      "deterministic_two_timestamp_tie_fixture_passed": true,
+      "independent_monthly_maximum_reconciliation_passed": true
+    },
+    "vw_q04_season_daytype": {
+      "installed": true,
+      "rows": 80,
+      "observed_hours": 87720,
+      "eligible_hours": 87502,
+      "observed_demand_mwh": "3579543533.0000",
+      "independent_weighted_fact_reconciliation_passed": true
+    }
+  },
+  "verified_insight": {
+    "authority_code": "PJM",
+    "period": "Summer 2025",
+    "weekday_mean_mw": "109686.345512820513",
+    "weekend_mean_mw": "100980.654320987654",
+    "difference_mw": "8705.691191832859",
+    "weekday_premium_pct": "8.6211475360023315",
+    "weekday_eligible_hours": 1560,
+    "weekend_eligible_hours": 648,
+    "peak_mw": "160560.0000",
+    "peak_utc": "2025-06-23T22:00:00Z",
+    "peak_local": "2025-06-23T18:00:00",
+    "peak_utc_offset_minutes": -240,
+    "peak_month_observed_hours": 720,
+    "peak_month_eligible_hours": 720
+  },
+  "rollup_2025": {
+    "validation_passed": true,
+    "preaggregation_grain": ["region_name", "source_group", "source_label"],
+    "reconciled_at_every_level": true,
+    "session_settings": {
+      "statement_timeout": "10min",
+      "temp_file_limit": "2GB",
+      "max_parallel_workers_per_gather": 0
+    },
+    "temp_file_limit_exceeded": false,
+    "source_label_detail_rows": 45,
+    "source_group_subtotal_rows": 42,
+    "regional_subtotal_rows": 5,
+    "grand_total_rows": 1,
+    "signed_generation_mwh": "1781305931.0000",
+    "generation_observations": 380904,
+    "top_source_group": "Gas",
+    "top_source_group_signed_mwh": "773557638.0000"
+  },
+  "cube_2025": {
+    "validation_passed": true,
+    "region_season_detail_rows": 20,
+    "region_total_rows": 5,
+    "season_total_rows": 4,
+    "grand_total_rows": 1,
+    "observed_demand_mwh": "1816431180.0000",
+    "mean_eligible_demand_mw": "41587.819218352909",
+    "eligible_observations": 43677,
+    "observed_hours": 43800,
+    "highest_region_season": "Mid-Atlantic / Summer",
+    "highest_region_season_mean_mw": "107131.414402173913"
+  },
+  "presentation": {
+    "file": "presentation/phase3/PowerPulse_Peak_Demand_OLAP_Analysis.pptx",
+    "slides": 2,
+    "native_charts": 1,
+    "embedded_chart_workbooks": 1,
+    "speaker_note_sections": 2,
+    "package_structure_passed": true,
+    "sha256": "f8267d48b271567d0b271ed2b5eea6fd9c4fe897d1134c48a1321a6b021b9c1a",
+    "visual_render_available": false,
+    "visual_render_limitation": "PowerPoint and LibreOffice are unavailable in the execution environment."
+  },
+  "sql_execution": [
+    "PASS sql/06_reporting/p2_profile_views.sql",
+    "PASS sql/07_phase3_analytics/p2_q03_q04.sql",
+    "PASS sql/08_phase3_olap/01_rollup_generation.sql",
+    "PASS sql/08_phase3_olap/02_cube_demand.sql"
+  ],
+  "boundaries": [
+    "The repository has no formal Phase 2 quality runner or Data_Quality_Report.pdf. Hanan ran direct grain, count, orphan, grid and DST readiness checks.",
+    "No natural monthly peak ties occur in the baseline. A deterministic two-timestamp fixture verifies the tie-preserving maximum join.",
+    "The PowerPoint package passed structural validation but could not be rendered for visual inspection because no presentation renderer is installed.",
+    "Power BI integration depends on Emaad. Forecast MAE and WAPE depend on Muaz's final Q05 view. Final report and deck assembly depend on Qasim."
+  ]
+}
