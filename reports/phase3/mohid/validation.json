@@ -1,0 +1,221 @@
+{
+  "tested_date": "2026-11-23",
+  "runtime": "PostgreSQL 19.0 (PGlite 0.6.0) on wasm32-unknown-emscripten, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.13 (e13ee988ce3d87a738dd8f3661d02223308c412a), 32-bit",
+  "source_commit": "27edc12134580c74184ebbfea0894cc8922e53ee",
+  "monthly_groups": 120,
+  "hourly_groups": 2880,
+  "summary": {
+    "observed_hours": 87720,
+    "eligible_hours": 87502,
+    "null_hours": 218,
+    "demand_mwh": "3579543533.0000",
+    "forecast_pairs": 87399,
+    "abs_error_sum_mw": "128410021.0000",
+    "eligible_actual_sum_mw": "3576725839.0000"
+  },
+  "byYear": [
+    {
+      "calendar_year": 2024,
+      "demand_mwh": "1763112353.0000",
+      "eligible_hours": 43825
+    },
+    {
+      "calendar_year": 2025,
+      "demand_mwh": "1816431180.0000",
+      "eligible_hours": 43677
+    }
+  ],
+  "byAuthority": [
+    {
+      "authority_code": "CISO",
+      "demand_mwh": "445850322.0000",
+      "eligible_hours": 17448
+    },
+    {
+      "authority_code": "ERCO",
+      "demand_mwh": "949088965.0000",
+      "eligible_hours": 17496
+    },
+    {
+      "authority_code": "ISNE",
+      "demand_mwh": "229672725.0000",
+      "eligible_hours": 17542
+    },
+    {
+      "authority_code": "NYIS",
+      "demand_mwh": "302429415.0000",
+      "eligible_hours": 17544
+    },
+    {
+      "authority_code": "PJM",
+      "demand_mwh": "1652502106.0000",
+      "eligible_hours": 17472
+    }
+  ],
+  "totals": [
+    {
+      "month": "2024-01-01",
+      "demand_mwh": "155571956.0000"
+    },
+    {
+      "month": "2024-02-01",
+      "demand_mwh": "132383462.0000"
+    },
+    {
+      "month": "2024-03-01",
+      "demand_mwh": "129951044.0000"
+    },
+    {
+      "month": "2024-04-01",
+      "demand_mwh": "125914026.0000"
+    },
+    {
+      "month": "2024-05-01",
+      "demand_mwh": "140556169.0000"
+    },
+    {
+      "month": "2024-06-01",
+      "demand_mwh": "161124382.0000"
+    },
+    {
+      "month": "2024-07-01",
+      "demand_mwh": "178423079.0000"
+    },
+    {
+      "month": "2024-08-01",
+      "demand_mwh": "175075165.0000"
+    },
+    {
+      "month": "2024-09-01",
+      "demand_mwh": "146871572.0000"
+    },
+    {
+      "month": "2024-10-01",
+      "demand_mwh": "138220183.0000"
+    },
+    {
+      "month": "2024-11-01",
+      "demand_mwh": "128838595.0000"
+    },
+    {
+      "month": "2024-12-01",
+      "demand_mwh": "150182720.0000"
+    },
+    {
+      "month": "2025-01-01",
+      "demand_mwh": "165636444.0000"
+    },
+    {
+      "month": "2025-02-01",
+      "demand_mwh": "140969316.0000"
+    },
+    {
+      "month": "2025-03-01",
+      "demand_mwh": "136036204.0000"
+    },
+    {
+      "month": "2025-04-01",
+      "demand_mwh": "131083569.0000"
+    },
+    {
+      "month": "2025-05-01",
+      "demand_mwh": "139784627.0000"
+    },
+    {
+      "month": "2025-06-01",
+      "demand_mwh": "162150102.0000"
+    },
+    {
+      "month": "2025-07-01",
+      "demand_mwh": "183572218.0000"
+    },
+    {
+      "month": "2025-08-01",
+      "demand_mwh": "171549828.0000"
+    },
+    {
+      "month": "2025-09-01",
+      "demand_mwh": "151680793.0000"
+    },
+    {
+      "month": "2025-10-01",
+      "demand_mwh": "141409765.0000"
+    },
+    {
+      "month": "2025-11-01",
+      "demand_mwh": "135497429.0000"
+    },
+    {
+      "month": "2025-12-01",
+      "demand_mwh": "157060885.0000"
+    }
+  ],
+  "input_sha256": {
+    "EIA930_BALANCE_2024_Jan_Jun_selected.csv": "2e754508a6acef06567364b22375f5bb464659981b73cbf847cfde9385f70f71",
+    "EIA930_BALANCE_2024_Jul_Dec_selected.csv": "aafeeedd6d1614287aaca77ce9a83e37aa02019f71a74dabaf323177ce7a81e8",
+    "EIA930_BALANCE_2025_Jan_Jun_selected.csv": "826f29984727b5c5bb733c584a6d7e18a31cdf34b35c10019e1f4da9390a9163",
+    "EIA930_BALANCE_2025_Jul_Dec_selected.csv": "929e01a1cb63a20644b37ecdfb00e96d248e843a0ffbfcc3d31cd43d16e956d6"
+  },
+  "checks": [
+    "Real source oracle: all 120 authority/month groups",
+    "Real source oracle: all 2880 authority/month/hour groups",
+    "Independent SQL fact-to-view reconciliation",
+    "Views installed twice without changes",
+    "Analytical submission SQL executes",
+    "Internal missing month does not bridge MoM",
+    "Zero prior denominator yields NULL",
+    "All-null/negative-only demand yields NULL energy",
+    "Zero demand is eligible energy but not forecast pair",
+    "Repeated local hour preserves both UTC instants",
+    "Negative forecast excluded; equality remains eligible",
+    "Weighted profile mean equals raw mean"
+  ],
+  "test_method": {
+    "demand_data": "All 87,720 selected CSV rows normalized independently into a disposable database using the repository warehouse DDL. This tests the reporting SQL, not a clean full Phase 2 pipeline execution.",
+    "oracle": "Independent Python Decimal aggregation of source demand, forecast and local-hour labels. Compared every authority/month and authority/month/hour group.",
+    "fixture_tests": "Nine disposable observations exercise internal missing months, zero denominator, null/negative demand, zero demand, repeated local hour, negative forecast and equal pairs. Rolled back after checks."
+  },
+  "python_runner": {
+    "passed": true,
+    "method": "psycopg 3.3.9 against an isolated PostgreSQL protocol fixture through @electric-sql/pglite-socket 0.3.0; one known demand observation",
+    "checks": [
+      "View installation and SQL validation commit",
+      "Read-only repeatable-read export",
+      "Three CSV files with expected single result row",
+      "Invalid month boundaries rejected before connection"
+    ]
+  },
+  "power_bi": {
+    "schema_validated_files": 21,
+    "model_tables": 3,
+    "visuals": 12,
+    "checks": [
+      "Microsoft PBIR/PBIP/PBISM JSON schemas",
+      "All visual fields resolve to a model column or measure",
+      "Relationship columns resolve",
+      "All visuals within 1280x720 canvas"
+    ],
+    "power_bi_desktop_opened": true,
+    "native_observation": "Executive Overview page, slicers, cards, line chart and three model tables opened successfully in installed Power BI Desktop. DAX measures compiled and blank/zero states rendered before refresh.",
+    "refresh_completed": false,
+    "refresh_requirement": "Local PostgreSQL database credentials and completed warehouse. No user credentials were entered. Check populated visuals and slicer totals after refresh."
+  },
+  "presentation": {
+    "slides": 2,
+    "editable_native_charts": 2,
+    "embedded_chart_workbooks": 2,
+    "package_integrity_passed": true,
+    "layout_findings": 0,
+    "font_policy_passed": true,
+    "native_chart_validation_passed": true,
+    "sha256": "b365d2a44e75db2be89702b34c34462396f5714fc304a1a625c2a54b11559889",
+    "rendered_slides_visually_inspected": true,
+    "opened_in_powerpoint": false
+  },
+  "boundaries": [
+    "SQL uses PostgreSQL 16-compatible constructs, executed here on PostgreSQL 19.0 WASM/PGlite 0.6.0, not a native PostgreSQL 16 server.",
+    "A teammate must run the reproducible scripts on the actual warehouse and check Power BI measures after entering local credentials.",
+    "No full Phase 2 generation/quality certification or other students work is claimed.",
+    "Instructor rubric mapping approval and teammate review are not claimed."
+  ]
+}

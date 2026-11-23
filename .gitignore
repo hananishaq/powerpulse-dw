@@ -27,3 +27,7 @@ data_acquisition/refreshed_data/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Power BI local caches, connection settings and recovery state
+.pbi/
+**/.pbi/
