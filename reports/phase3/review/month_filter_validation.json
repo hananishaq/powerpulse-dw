@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-24",
+  "scope": "Monthly Q04 reporting view and BI handoff. Isolated source-loaded demand database; no native Power BI UI test.",
+  "runtime": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "checks": [
+    {
+      "name": "execute sql/06_reporting/p1_demand_views.sql",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "execute sql/06_reporting/p2_profile_views.sql",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "execute sql/07_phase3_analytics/p1_validate.sql",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "execute sql/07_phase3_analytics/p2_q03_q04.sql",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all monthly/day-type groups match independent source",
+      "passed": true,
+      "detail": {
+        "groups": 240,
+        "source_rows": 87720
+      }
+    },
+    {
+      "name": "monthly rollup preserves all 80 original seasonal totals",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "month filter PJM June 2025",
+      "passed": true,
+      "detail": {
+        "total": "74767915.0000",
+        "eligible": "720",
+        "observed": "720",
+        "mean": "103844.326388888889"
+      }
+    },
+    {
+      "name": "month filter PJM June and August 2025",
+      "passed": true,
+      "detail": {
+        "total": "150114984.0000",
+        "eligible": "1464",
+        "observed": "1464",
+        "mean": "102537.557377049180"
+      }
+    },
+    {
+      "name": "month filter all authorities both years",
+      "passed": true,
+      "detail": {
+        "total": "3579543533.0000",
+        "eligible": "87502",
+        "observed": "87720",
+        "mean": "40908.133905510731"
+      }
+    },
+    {
+      "name": "month filter empty June and Winter",
+      "passed": true,
+      "detail": {
+        "total": null,
+        "eligible": null,
+        "observed": null,
+        "mean": null
+      }
+    },
+    {
+      "name": "reinstall produces identical monthly rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all-null month remains null energy with observed hours",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "selections": [
+    {
+      "selection": "PJM June 2025",
+      "result": {
+        "total": "74767915.0000",
+        "eligible": "720",
+        "observed": "720",
+        "mean": "103844.326388888889"
+      }
+    },
+    {
+      "selection": "PJM June and August 2025",
+      "result": {
+        "total": "150114984.0000",
+        "eligible": "1464",
+        "observed": "1464",
+        "mean": "102537.557377049180"
+      }
+    },
+    {
+      "selection": "all authorities both years",
+      "result": {
+        "total": "3579543533.0000",
+        "eligible": "87502",
+        "observed": "87720",
+        "mean": "40908.133905510731"
+      }
+    },
+    {
+      "selection": "empty June and Winter",
+      "result": {
+        "total": null,
+        "eligible": null,
+        "observed": null,
+        "mean": null
+      }
+    }
+  ],
+  "files_sha256": {
+    "sql/06_reporting/p2_profile_views.sql": "81ecc385d01400bfdeb0496a2a4d37ba949ef0d2de06a2240e2122fd21faadd7",
+    "sql/07_phase3_analytics/p2_q03_q04.sql": "bfdfdc7f644a1b4cbae1f4da8da0ca3fe206fb6d8855ba269893a4b3bbd912c7",
+    "bi/phase3/p2_detail_spec.md": "9668205353463da4bd4cfdcf4d1e162f62f3c7721cdc6dd34dc112aa359ca9f7"
+  },
+  "remaining_integration": "Emaad must import vw_q04_month_daytype as SeasonalProfile, relate month_start to the shared month dimension, and run native Power BI acceptance checks. Master PBIX is absent.",
+  "tested_files_sha256": {
+    "sql/06_reporting/p2_profile_views.sql": "81ecc385d01400bfdeb0496a2a4d37ba949ef0d2de06a2240e2122fd21faadd7",
+    "sql/07_phase3_analytics/p2_q03_q04.sql": "bfdfdc7f644a1b4cbae1f4da8da0ca3fe206fb6d8855ba269893a4b3bbd912c7",
+    "bi/phase3/p2_detail_spec.md": "995596952c223f62d50132859ca216ba8f11264f305f4626be67f270f437de77"
+  },
+  "documentation_followup": "Forecast handoff now names Muaz implemented Q05 view. Tested monthly Q04 SQL is unchanged; original tested hashes are preserved."
+}

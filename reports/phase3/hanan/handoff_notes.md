@@ -15,6 +15,12 @@ Owner: Hanan Ishaq, 24L-2537. Reviewer: Muaz Fahad.
 
 - Install `p2_profile_views.sql` after `p1_demand_views.sql`.
 - Import Q03 and Q04 at their declared grains into the Detailed Analysis page.
+- For the BI table `SeasonalProfile`, import `vw_q04_month_daytype` and relate
+  its `month_start` to the shared month dimension. Recalculate seasonal means
+  from summed demand and eligible-hour components after month filtering.
+  `vw_q04_season_daytype` remains the full-season analytical output; it cannot
+  support a month slicer directly. See the updated relationship and acceptance
+  checks in `bi/phase3/p2_detail_spec.md`.
 - Use shared authority and calendar dimensions. Keep demand and generation facts
   separated.
 - Integrate the visual and DAX contract in `bi/phase3/p2_detail_spec.md`.

@@ -12,15 +12,33 @@ settings and never enter the repository.
 | Model table | PostgreSQL source | Grain |
 |---|---|---|
 | MonthlyPeak | `project_reporting.vw_q03_monthly_peaks` | Authority, operating month, tied peak UTC timestamp |
-| SeasonalProfile | `project_reporting.vw_q04_season_daytype` | Authority, calendar year, meteorological season, weekday/weekend |
+| SeasonalProfile | `project_reporting.vw_q04_month_daytype` | Authority, operating month, weekday/weekend; includes calendar year and season |
 | AuthorityAnalysis | `project_reporting.vw_authority_analysis` | Authority and operating month |
-| ForecastPerformance | Muaz Q05 reporting view | Authority and agreed forecast period |
+| ForecastPerformance | `project_reporting.vw_q05_forecast_accuracy` | Authority and operating month |
 | FuelComposition | Emaad generation reporting view | Authority, UTC hour, mapped source category |
 
 Create shared `Authority` and `CalendarMonth` dimensions. Use single-direction
 one-to-many relationships from dimensions to facts. Keep generation and demand
 tables unrelated at fact level. Any combined generation/demand table must first
 aggregate generation to authority and UTC hour.
+
+Connect `CalendarMonth[month_start]` (unique, DATE, first day of each month)
+to `SeasonalProfile[month_start]`, `MonthlyPeak[month_start]`, and
+`AuthorityAnalysis[month_start]` with active one-to-many, single-direction
+relationships. Connect `Authority[authority_key]` to each table's authority
+key. Reuse the Executive Overview's shared month dimension (named `Month` in
+Mohid's source model) when integrating; do not create disconnected duplicate
+month slicers. Use year, month and season fields from that month dimension
+and authority/region fields from `Authority` for shared slicers.
+If the shared month dimension has no season column, add one using its
+operating `month_number`: 12/1/2 = Winter, 3/4/5 = Spring, 6/7/8 = Summer,
+9/10/11 = Autumn. Keep the calendar year unchanged for December.
+
+The original `vw_q04_season_daytype` remains the full-season SQL output and a
+reconciliation reference. Import the monthly view for `SeasonalProfile`:
+the seasonal output has already combined months and cannot respond to a
+month selection. Keep the existing DAX below; summed monthly components
+recalculate the mean for the selected months, seasons and day types.
 
 `MonthlyPeak[utc_hour_end]` is the observation key. Display it in UTC and show
 `local_hour_end` plus `utc_offset_minutes` in tooltips. A month can contain more
@@ -70,8 +88,12 @@ RETURN
     )
 ```
 
-When Muaz supplies the final Q05 view, use additive forecast components and
-recalculate both metrics after filtering.
+Muaz's Q05 view supplies the additive forecast components below. Connect
+`ForecastPerformance[month_start]` to the shared month dimension and its
+authority key to `Authority`. Recalculate both metrics after filtering.
+See `docs/phase3/muaz_forecast_performance.md` for the Q06 monthly/hour input,
+eligibility, validated results and full measure handoff. Emaad's acceptance
+and native master PBIX integration remain pending.
 
 ```DAX
 Forecast MAE MW =
@@ -110,33 +132,50 @@ across months or authorities.
 
 - Year, month, authority, and region filter all demand visuals.
 - Season and day type filter the seasonal profile and authority comparison.
+- Season comes from the shared month dimension. Day type comes from
+  `SeasonalProfile` and filters the two profile visuals only; the monthly
+  segmentation, peak and forecast inputs do not support a day-type filter.
+  In Power BI Edit interactions, disable the day-type slicer's interaction
+  with those other visuals.
 - Season can filter the fuel visual only when Emaad exposes the same operating
   date semantics.
 - Fuel categories filter only generation visuals.
 - Selecting an authority cross-highlights peak, profile, segmentation, forecast,
   and fuel visuals through the shared authority dimension.
-- The forecast visual remains hidden or visibly marked as pending until Muaz's
-  final view and metric definitions are accepted.
+- Enable the forecast visual after Emaad accepts the supplied Q05 view and
+  validates its measures against SQL under the same slicers.
 
 ## Validation SQL
 
 Validate the PJM 2025 summer profile shown on the page.
 
 ```sql
-SELECT day_type, observed_authority_hours, eligible_demand_hours,
-       demand_sum_mw,
-       demand_sum_mw / NULLIF(eligible_demand_hours, 0) AS mean_demand_mw,
-       observed_demand_coverage_pct
-FROM project_reporting.vw_q04_season_daytype
+SELECT day_type,
+       sum(observed_authority_hours) AS observed_authority_hours,
+       sum(eligible_demand_hours) AS eligible_demand_hours,
+       sum(demand_sum_mw) AS demand_sum_mw,
+       sum(demand_sum_mw) / NULLIF(sum(eligible_demand_hours), 0) AS mean_demand_mw,
+       100.0 * sum(eligible_demand_hours)
+           / NULLIF(sum(observed_authority_hours), 0) AS observed_demand_coverage_pct
+FROM project_reporting.vw_q04_month_daytype
 WHERE authority_code = 'PJM'
   AND calendar_year = 2025
   AND season = 'Summer'
+GROUP BY day_type
 ORDER BY day_type;
 ```
 
 Expected means are 109,686.3455 MW for weekdays and 100,980.6543 MW for
 weekends. Both cohorts have 100% eligible coverage among their 1,560 and 648
 observed records.
+
+For the month-filter acceptance check, add
+`AND month_start = DATE '2025-06-01'` to that query. Compare its sums, counts,
+mean and coverage with a direct demand-fact query restricted to PJM and
+June 2025 operating dates. Selecting June must show June observations only,
+not the June-August seasonal total. Repeat with June and August together,
+both years, and a season/month combination with no matching observations.
+For the empty combination, the mean and coverage must be blank/N/A.
 
 Validate the peak visual and its timestamp.
 
@@ -170,5 +209,6 @@ generation query.
 - Signed generation includes negative storage and balancing observations.
 - Source data covers five authorities for 2024 and 2025. It is not a complete
   national market or a causal model.
-- Forecast visuals depend on Muaz's accepted Q05 implementation. Fuel composition
+- Forecast SQL is supplied; native forecast-visual integration and acceptance
+  remain pending with Emaad. Fuel composition
   depends on Emaad's mapped generation view and master model integration.

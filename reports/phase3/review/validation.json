@@ -1,0 +1,400 @@
+{
+  "review_date": "2026-11-24",
+  "commit": "81ed32c30f7cceb374fb94a6716cc4f073ac8aa2",
+  "runtime": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "scope": "Fresh isolated PostgreSQL on 127.0.0.1:55433; existing user database not accessed. No benchmark or Muaz implementation.",
+  "counts": {
+    "duplicate_source_keys": 0,
+    "demand": 87720,
+    "null_actual": 218,
+    "null_forecast": 218,
+    "null_total": 218,
+    "any_core_null": 316,
+    "all_core_null": 120,
+    "forecast_pairs": 87399,
+    "generation": 727720,
+    "negative_generation": 31007,
+    "residual_comparable": 87471,
+    "residual_flagged": 6958
+  },
+  "tables": {
+    "dim_date": 731,
+    "dim_hour": 24,
+    "dim_balancing_authority": 5,
+    "dim_energy_source": 19,
+    "dim_source_snapshot": 4,
+    "fact_hourly_demand": 87720,
+    "fact_hourly_generation": 727720,
+    "expected_hour_grid": 87720
+  },
+  "source_sha256": {
+    "EIA930_BALANCE_2024_Jan_Jun_selected.csv": "2e754508a6acef06567364b22375f5bb464659981b73cbf847cfde9385f70f71",
+    "EIA930_BALANCE_2024_Jul_Dec_selected.csv": "aafeeedd6d1614287aaca77ce9a83e37aa02019f71a74dabaf323177ce7a81e8",
+    "EIA930_BALANCE_2025_Jan_Jun_selected.csv": "826f29984727b5c5bb733c584a6d7e18a31cdf34b35c10019e1f4da9390a9163",
+    "EIA930_BALANCE_2025_Jul_Dec_selected.csv": "929e01a1cb63a20644b37ecdfb00e96d248e843a0ffbfcc3d31cd43d16e956d6"
+  },
+  "checks": [
+    {
+      "name": "manifest hash EIA930_BALANCE_2024_Jan_Jun_selected.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest hash EIA930_BALANCE_2024_Jul_Dec_selected.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest hash EIA930_BALANCE_2025_Jan_Jun_selected.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest hash EIA930_BALANCE_2025_Jul_Dec_selected.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "warehouse counts",
+      "passed": true,
+      "detail": {
+        "dim_date": 731,
+        "dim_hour": 24,
+        "dim_balancing_authority": 5,
+        "dim_energy_source": 19,
+        "dim_source_snapshot": 4,
+        "fact_hourly_demand": 87720,
+        "fact_hourly_generation": 727720,
+        "expected_hour_grid": 87720
+      }
+    },
+    {
+      "name": "every demand fact equals independent CSV including dates and lineage",
+      "passed": true,
+      "detail": {
+        "mismatches": 0,
+        "compared": 87720
+      }
+    },
+    {
+      "name": "every signed generation value equals independent CSV",
+      "passed": true,
+      "detail": {
+        "mismatches": 0,
+        "compared": 727720
+      }
+    },
+    {
+      "name": "grid matches independent source keys including boundaries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous UTC hours CISO",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous UTC hours ERCO",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous UTC hours ISNE",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous UTC hours NYIS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "continuous UTC hours PJM",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "vw_q01_monthly_demand_energy independent CSV groups",
+      "passed": true,
+      "detail": {
+        "groups": 120,
+        "mismatches": 0
+      }
+    },
+    {
+      "name": "vw_q02_hourly_profile independent CSV groups",
+      "passed": true,
+      "detail": {
+        "groups": 2880,
+        "mismatches": 0
+      }
+    },
+    {
+      "name": "vw_q04_season_daytype independent CSV groups",
+      "passed": true,
+      "detail": {
+        "groups": 80,
+        "mismatches": 0
+      }
+    },
+    {
+      "name": "Q03 all peak UTC timestamps independently reconciled",
+      "passed": true,
+      "detail": {
+        "rows": 120
+      }
+    },
+    {
+      "name": "shared forecast additive components match independent same-pair source",
+      "passed": true,
+      "detail": {
+        "eligible_pairs": 87399,
+        "mismatched_groups": 0
+      }
+    },
+    {
+      "name": "SQL execution sql/07_phase3_analytics/p1_validate.sql",
+      "passed": true,
+      "detail": {
+        "result_set_rows": []
+      }
+    },
+    {
+      "name": "SQL execution sql/07_phase3_analytics/p1_q01_q02.sql",
+      "passed": true,
+      "detail": {
+        "result_set_rows": [
+          120,
+          120,
+          5,
+          120
+        ]
+      }
+    },
+    {
+      "name": "SQL execution sql/07_phase3_analytics/p2_q03_q04.sql",
+      "passed": true,
+      "detail": {
+        "result_set_rows": [
+          120,
+          80
+        ]
+      }
+    },
+    {
+      "name": "SQL execution sql/08_phase3_olap/01_rollup_generation.sql",
+      "passed": true,
+      "detail": {
+        "result_set_rows": [
+          93
+        ]
+      }
+    },
+    {
+      "name": "SQL execution sql/08_phase3_olap/02_cube_demand.sql",
+      "passed": true,
+      "detail": {
+        "result_set_rows": [
+          30
+        ]
+      }
+    },
+    {
+      "name": "ROLLUP all four levels match independent source aggregation",
+      "passed": true,
+      "detail": {
+        "rows": 93,
+        "mismatches": 0,
+        "grand_total": [
+          "1781305931",
+          380904
+        ]
+      }
+    },
+    {
+      "name": "CUBE all four levels match independent source aggregation",
+      "passed": true,
+      "detail": {
+        "rows": 30,
+        "mismatches": 0,
+        "grand_total": [
+          "1816431180",
+          43677,
+          43800
+        ]
+      }
+    },
+    {
+      "name": "actual Q03 view retains both injected peak ties",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual Q03 view retains null peak month",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact recorded hash bi/phase3/mohid/PowerPulse_Overview.pbix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact recorded hash reports/phase3/mohid/Executive_Overview.pdf",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "artifact recorded hash presentation/phase3/mohid_demand_overview.pptx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive integrity presentation/phase3/mohid_demand_overview.pptx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "two contributed slides presentation/phase3/mohid_demand_overview.pptx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive integrity presentation/phase3/PowerPulse_Peak_Demand_OLAP_Analysis.pptx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "two contributed slides presentation/phase3/PowerPulse_Peak_Demand_OLAP_Analysis.pptx",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive integrity bi/phase3/mohid/PowerPulse_Overview.pbix",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BI embedded snapshot exists",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "BI snapshot agrees with independent source demand",
+      "passed": true,
+      "detail": {
+        "authority_months": 120
+      }
+    }
+  ],
+  "all_passed": true,
+  "fresh_pipeline": {
+    "command": "python etl/run_all.py --phase3",
+    "database": "isolated temporary powerpulse_audit",
+    "status": "PASS",
+    "reran_full_pipeline": false
+  },
+  "boundaries": [
+    "Existing user database was not inspected because no local credentials were configured.",
+    "Power BI Desktop refresh, slicer interactions and slide rendering were not freshly verified; archive integrity, recorded hashes and embedded snapshot totals were checked.",
+    "This review does not replace the missing formal persisted Phase 2 quality gate or its negative-test suite.",
+    "No Muaz Q05/Q06 implementation, index experiment, report or presentation contribution was started."
+  ],
+  "findings": [
+    {
+      "severity": "integration",
+      "file": "bi/phase3/p2_detail_spec.md",
+      "finding": "Month slicer is specified to filter all demand visuals, but SeasonalProfile has authority/year/season/day-type grain and no month key.",
+      "required_followup": "Hanan and Emaad must supply a month-compatible profile input or revise and disclose filter interactions. Do not map a selected month to a whole-season total.",
+      "resolution": {
+        "date": "2026-11-24",
+        "status": "SQL and BI handoff corrected; native master PBIX integration pending",
+        "new_view": "project_reporting.vw_q04_month_daytype",
+        "evidence": "reports/phase3/review/month_filter_validation.json"
+      }
+    },
+    {
+      "severity": "readiness",
+      "finding": "Formal Phase 2 quality SQL, etl/04_run_quality_checks.py, Data_Quality_Report.pdf and CI/integration suite described by report release 52990f8 are absent at reviewed HEAD.",
+      "required_followup": "Reconcile the separate Phase 2 implementation revision and record the team quality gate before final submission."
+    },
+    {
+      "severity": "documentation",
+      "files": [
+        "docs/phase3/README.md",
+        "docs/phase3/view_contract.md",
+        "docs/phase3/rubric_mapping.md"
+      ],
+      "finding": "Mohid-focused documents still list Hanan deliverables as pending; root README also labels Phase 2 in progress.",
+      "required_followup": "Release coordinator updates team status and documents Hanan SQL install order. etl/run_all.py --phase3 currently installs Mohid only."
+    },
+    {
+      "severity": "acceptance",
+      "finding": "Final master PBIX, three-page interactions, final reports, instructor domain-mapping acceptance and final release sign-off remain team dependencies.",
+      "required_followup": "Do not equate two completed SQL packages with final team completion."
+    }
+  ],
+  "duplicate_equivalent_indexes": [
+    {
+      "table": "fact_hourly_demand",
+      "definition": "btree (date_key)",
+      "names": [
+        "idx_demand_date_key",
+        "idx_fact_hourly_demand_date_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_demand",
+      "definition": "btree (hour_key)",
+      "names": [
+        "idx_demand_hour_key",
+        "idx_fact_hourly_demand_hour_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_demand",
+      "definition": "btree (source_snapshot_key)",
+      "names": [
+        "idx_demand_snapshot_key",
+        "idx_fact_hourly_demand_source_snapshot_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_generation",
+      "definition": "btree (date_key)",
+      "names": [
+        "idx_fact_hourly_generation_date_key",
+        "idx_generation_date_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_generation",
+      "definition": "btree (energy_source_key)",
+      "names": [
+        "idx_fact_hourly_generation_energy_source_key",
+        "idx_generation_energy_source_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_generation",
+      "definition": "btree (hour_key)",
+      "names": [
+        "idx_fact_hourly_generation_hour_key",
+        "idx_generation_hour_key"
+      ]
+    },
+    {
+      "table": "fact_hourly_generation",
+      "definition": "btree (source_snapshot_key)",
+      "names": [
+        "idx_fact_hourly_generation_source_snapshot_key",
+        "idx_generation_snapshot_key"
+      ]
+    }
+  ],
+  "all_constraints_validated": true,
+  "profile_views_second_install_unchanged": true,
+  "review_check_count": 37,
+  "fresh_ui_validation": false
+}

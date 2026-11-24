@@ -80,3 +80,30 @@ COMMENT ON VIEW project_reporting.vw_q03_monthly_peaks IS
 
 COMMENT ON VIEW project_reporting.vw_q04_season_daytype IS
     'Q04. Authority/calendar-year/meteorological-season/day-type profile from source operating dates. Weekdays are ISO 1-5. Winter stays within calendar year. Roll up means from demand_sum_mw and eligible_demand_hours.';
+
+-- BI input for Q04: retain month so CalendarMonth slicers restrict the actual
+-- observations before seasonal means are calculated. The original seasonal
+-- view above remains the full-season analytical output.
+CREATE OR REPLACE VIEW project_reporting.vw_q04_month_daytype AS
+SELECT authority_key, authority_code, authority_name,
+       region_code, region_name, month_start, calendar_year, month_number,
+       season,
+       CASE WHEN weekday_number BETWEEN 1 AND 5
+            THEN 'Weekday' ELSE 'Weekend' END AS day_type,
+       count(*) AS observed_authority_hours,
+       count(eligible_actual_demand_mw) AS eligible_demand_hours,
+       count(*) FILTER (WHERE actual_demand_mw IS NULL) AS null_actual_hours,
+       count(*) FILTER (WHERE actual_demand_mw < 0) AS negative_actual_hours,
+       sum(eligible_actual_demand_mw) AS demand_sum_mw,
+       avg(eligible_actual_demand_mw) AS mean_demand_mw,
+       100.0 * count(eligible_actual_demand_mw)
+           / nullif(count(*), 0) AS observed_demand_coverage_pct
+FROM project_reporting.vw_demand_observation
+GROUP BY authority_key, authority_code, authority_name,
+         region_code, region_name, month_start, calendar_year, month_number,
+         season,
+         CASE WHEN weekday_number BETWEEN 1 AND 5
+              THEN 'Weekday' ELSE 'Weekend' END;
+
+COMMENT ON VIEW project_reporting.vw_q04_month_daytype IS
+    'Q04 BI input. One row per authority/operating month/day-type. Filter month_start before rolling up to season. Recalculate means and coverage from additive sums/counts; never average monthly means. Original seasonal Q04 output is unchanged.';

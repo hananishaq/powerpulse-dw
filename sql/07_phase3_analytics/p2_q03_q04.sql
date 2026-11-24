@@ -159,5 +159,61 @@ BEGIN
         RAISE EXCEPTION 'Q04 differs from independently grouped demand facts';
     END IF;
 
-    RAISE NOTICE 'PASS: Q03 tie fixture/maxima and Q04 weighted seasonal profiles';
+    IF EXISTS (
+        SELECT authority_key, month_start, day_type
+        FROM project_reporting.vw_q04_month_daytype
+        GROUP BY authority_key, month_start, day_type
+        HAVING count(*) <> 1
+    ) THEN
+        RAISE EXCEPTION 'Q04 BI input is not unique at authority/month/day-type grain';
+    END IF;
+
+    IF EXISTS (
+        WITH expected AS (
+            SELECT f.authority_key,
+                   date_trunc('month', d.calendar_date)::date AS month_start,
+                   d.calendar_year, d.month_number, d.season,
+                   CASE WHEN d.weekday_number BETWEEN 1 AND 5
+                        THEN 'Weekday' ELSE 'Weekend' END AS day_type,
+                   count(*) AS observed_authority_hours,
+                   count(*) FILTER (WHERE f.actual_demand_mw >= 0)
+                       AS eligible_demand_hours,
+                   count(*) FILTER (WHERE f.actual_demand_mw IS NULL)
+                       AS null_actual_hours,
+                   count(*) FILTER (WHERE f.actual_demand_mw < 0)
+                       AS negative_actual_hours,
+                   sum(f.actual_demand_mw) FILTER (WHERE f.actual_demand_mw >= 0)
+                       AS demand_sum_mw,
+                   avg(f.actual_demand_mw) FILTER (WHERE f.actual_demand_mw >= 0)
+                       AS mean_demand_mw,
+                   100.0 * count(*) FILTER (WHERE f.actual_demand_mw >= 0)
+                       / nullif(count(*), 0) AS observed_demand_coverage_pct
+            FROM project_dw.fact_hourly_demand f
+            JOIN project_dw.dim_date d USING (date_key)
+            GROUP BY f.authority_key,
+                     date_trunc('month', d.calendar_date)::date,
+                     d.calendar_year, d.month_number, d.season,
+                     CASE WHEN d.weekday_number BETWEEN 1 AND 5
+                          THEN 'Weekday' ELSE 'Weekend' END
+        ), differences AS (
+            (SELECT * FROM expected EXCEPT
+             SELECT authority_key, month_start, calendar_year, month_number,
+                    season, day_type, observed_authority_hours,
+                    eligible_demand_hours, null_actual_hours, negative_actual_hours,
+                    demand_sum_mw, mean_demand_mw, observed_demand_coverage_pct
+             FROM project_reporting.vw_q04_month_daytype)
+            UNION ALL
+            (SELECT authority_key, month_start, calendar_year, month_number,
+                    season, day_type, observed_authority_hours,
+                    eligible_demand_hours, null_actual_hours, negative_actual_hours,
+                    demand_sum_mw, mean_demand_mw, observed_demand_coverage_pct
+             FROM project_reporting.vw_q04_month_daytype
+             EXCEPT SELECT * FROM expected)
+        )
+        SELECT 1 FROM differences
+    ) THEN
+        RAISE EXCEPTION 'Q04 monthly BI components differ from independently grouped facts';
+    END IF;
+
+    RAISE NOTICE 'PASS: Q03 tie fixture/maxima, Q04 seasonal and month-filterable profiles';
 END $$;

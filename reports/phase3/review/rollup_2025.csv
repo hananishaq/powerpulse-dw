@@ -1,0 +1,94 @@
+selected_year,region_name,source_group,source_label,aggregation_level,signed_generation_mwh,generation_observations,region_is_total,source_group_is_total,source_label_is_total
+2025,California,Coal,Coal,Source label detail,-1287.0000,8712,0,0,0
+2025,California,Coal,All source labels,Source group subtotal,-1287.0000,8712,0,0,1
+2025,California,Gas,Natural Gas,Source label detail,78576995.0000,8712,0,0,0
+2025,California,Gas,All source labels,Source group subtotal,78576995.0000,8712,0,0,1
+2025,California,Geothermal,Geothermal,Source label detail,284210.0000,384,0,0,0
+2025,California,Geothermal,All source labels,Source group subtotal,284210.0000,384,0,0,1
+2025,California,Hydro/storage,Hydropower Excluding Pumped Storage,Source label detail,21248358.0000,8712,0,0,0
+2025,California,Hydro/storage,All source labels,Source group subtotal,21248358.0000,8712,0,0,1
+2025,California,Nuclear,Nuclear,Source label detail,17524916.0000,8711,0,0,0
+2025,California,Nuclear,All source labels,Source group subtotal,17524916.0000,8711,0,0,1
+2025,California,Other/unknown,Other Fuel Sources,Source label detail,-1744130.0000,8712,0,0,0
+2025,California,Other/unknown,All source labels,Source group subtotal,-1744130.0000,8712,0,0,1
+2025,California,Petroleum,All Petroleum Products,Source label detail,352783.0000,8712,0,0,0
+2025,California,Petroleum,All source labels,Source group subtotal,352783.0000,8712,0,0,1
+2025,California,Solar,Solar without Integrated Battery Storage,Source label detail,49394334.0000,8712,0,0,0
+2025,California,Solar,All source labels,Source group subtotal,49394334.0000,8712,0,0,1
+2025,California,Wind,Wind without Integrated Battery Storage,Source label detail,19706330.0000,8712,0,0,0
+2025,California,Wind,All source labels,Source group subtotal,19706330.0000,8712,0,0,1
+2025,California,All source groups,All source labels,Region total,185342509.0000,70079,0,1,1
+2025,Mid-Atlantic,Coal,Coal,Source label detail,145476191.0000,8732,0,0,0
+2025,Mid-Atlantic,Coal,All source labels,Source group subtotal,145476191.0000,8732,0,0,1
+2025,Mid-Atlantic,Gas,Natural Gas,Source label detail,365658041.0000,8732,0,0,0
+2025,Mid-Atlantic,Gas,All source labels,Source group subtotal,365658041.0000,8732,0,0,1
+2025,Mid-Atlantic,Hydro/storage,Hydropower Excluding Pumped Storage,Source label detail,15468451.0000,8732,0,0,0
+2025,Mid-Atlantic,Hydro/storage,All source labels,Source group subtotal,15468451.0000,8732,0,0,1
+2025,Mid-Atlantic,Nuclear,Nuclear,Source label detail,270056746.0000,8732,0,0,0
+2025,Mid-Atlantic,Nuclear,All source labels,Source group subtotal,270056746.0000,8732,0,0,1
+2025,Mid-Atlantic,Other/unknown,Other Fuel Sources,Source label detail,12602454.0000,8732,0,0,0
+2025,Mid-Atlantic,Other/unknown,All source labels,Source group subtotal,12602454.0000,8732,0,0,1
+2025,Mid-Atlantic,Petroleum,All Petroleum Products,Source label detail,5321532.0000,8732,0,0,0
+2025,Mid-Atlantic,Petroleum,All source labels,Source group subtotal,5321532.0000,8732,0,0,1
+2025,Mid-Atlantic,Solar,Solar without Integrated Battery Storage,Source label detail,24599652.0000,8732,0,0,0
+2025,Mid-Atlantic,Solar,All source labels,Source group subtotal,24599652.0000,8732,0,0,1
+2025,Mid-Atlantic,Wind,Wind without Integrated Battery Storage,Source label detail,32072750.0000,8732,0,0,0
+2025,Mid-Atlantic,Wind,All source labels,Source group subtotal,32072750.0000,8732,0,0,1
+2025,Mid-Atlantic,All source groups,All source labels,Region total,871255817.0000,69856,0,1,1
+2025,New England,Coal,Coal,Source label detail,274461.0000,7080,0,0,0
+2025,New England,Coal,All source labels,Source group subtotal,274461.0000,7080,0,0,1
+2025,New England,Gas,Natural Gas,Source label detail,60094760.0000,8760,0,0,0
+2025,New England,Gas,All source labels,Source group subtotal,60094760.0000,8760,0,0,1
+2025,New England,Hydro/storage,Hydropower Excluding Pumped Storage,Source label detail,5121108.0000,8760,0,0,0
+2025,New England,Hydro/storage,Pumped Storage,Source label detail,1931979.0000,8736,0,0,0
+2025,New England,Hydro/storage,All source labels,Source group subtotal,7053087.0000,17496,0,0,1
+2025,New England,Nuclear,Nuclear,Source label detail,27463217.0000,8760,0,0,0
+2025,New England,Nuclear,All source labels,Source group subtotal,27463217.0000,8760,0,0,1
+2025,New England,Other/unknown,Other Fuel Sources,Source label detail,4737587.0000,8760,0,0,0
+2025,New England,Other/unknown,All source labels,Source group subtotal,4737587.0000,8760,0,0,1
+2025,New England,Petroleum,All Petroleum Products,Source label detail,1217296.0000,7105,0,0,0
+2025,New England,Petroleum,All source labels,Source group subtotal,1217296.0000,7105,0,0,1
+2025,New England,Solar,Solar with Integrated Battery Storage,Source label detail,24577.0000,8760,0,0,0
+2025,New England,Solar,Solar without Integrated Battery Storage,Source label detail,1577685.0000,8760,0,0,0
+2025,New England,Solar,All source labels,Source group subtotal,1602262.0000,17520,0,0,1
+2025,New England,Storage,Battery Storage,Source label detail,146060.0000,8760,0,0,0
+2025,New England,Storage,All source labels,Source group subtotal,146060.0000,8760,0,0,1
+2025,New England,Wind,Wind without Integrated Battery Storage,Source label detail,4533241.0000,8760,0,0,0
+2025,New England,Wind,All source labels,Source group subtotal,4533241.0000,8760,0,0,1
+2025,New England,All source groups,All source labels,Region total,107121971.0000,93001,0,1,1
+2025,New York,Coal,Coal,Source label detail,0.0000,8746,0,0,0
+2025,New York,Coal,All source labels,Source group subtotal,0.0000,8746,0,0,1
+2025,New York,Gas,Natural Gas,Source label detail,70125457.0000,8746,0,0,0
+2025,New York,Gas,All source labels,Source group subtotal,70125457.0000,8746,0,0,1
+2025,New York,Hydro/storage,Hydropower Excluding Pumped Storage,Source label detail,24062566.0000,8746,0,0,0
+2025,New York,Hydro/storage,All source labels,Source group subtotal,24062566.0000,8746,0,0,1
+2025,New York,Nuclear,Nuclear,Source label detail,27904549.0000,8746,0,0,0
+2025,New York,Nuclear,All source labels,Source group subtotal,27904549.0000,8746,0,0,1
+2025,New York,Other/unknown,Other Fuel Sources,Source label detail,2916876.0000,8746,0,0,0
+2025,New York,Other/unknown,All source labels,Source group subtotal,2916876.0000,8746,0,0,1
+2025,New York,Petroleum,All Petroleum Products,Source label detail,175808.0000,8746,0,0,0
+2025,New York,Petroleum,All source labels,Source group subtotal,175808.0000,8746,0,0,1
+2025,New York,Solar,Solar without Integrated Battery Storage,Source label detail,0.0000,8746,0,0,0
+2025,New York,Solar,All source labels,Source group subtotal,0.0000,8746,0,0,1
+2025,New York,Wind,Wind without Integrated Battery Storage,Source label detail,7036784.0000,8746,0,0,0
+2025,New York,Wind,All source labels,Source group subtotal,7036784.0000,8746,0,0,1
+2025,New York,All source groups,All source labels,Region total,132222040.0000,69968,0,1,1
+2025,Texas,Coal,Coal,Source label detail,63021861.0000,8712,0,0,0
+2025,Texas,Coal,All source labels,Source group subtotal,63021861.0000,8712,0,0,1
+2025,Texas,Gas,Natural Gas,Source label detail,199102385.0000,8712,0,0,0
+2025,Texas,Gas,All source labels,Source group subtotal,199102385.0000,8712,0,0,1
+2025,Texas,Hydro/storage,Hydropower Excluding Pumped Storage,Source label detail,535763.0000,8712,0,0,0
+2025,Texas,Hydro/storage,All source labels,Source group subtotal,535763.0000,8712,0,0,1
+2025,Texas,Nuclear,Nuclear,Source label detail,41812940.0000,8712,0,0,0
+2025,Texas,Nuclear,All source labels,Source group subtotal,41812940.0000,8712,0,0,1
+2025,Texas,Other/unknown,Other Fuel Sources,Source label detail,257602.0000,8712,0,0,0
+2025,Texas,Other/unknown,All source labels,Source group subtotal,257602.0000,8712,0,0,1
+2025,Texas,Solar,Solar without Integrated Battery Storage,Source label detail,67387184.0000,8712,0,0,0
+2025,Texas,Solar,All source labels,Source group subtotal,67387184.0000,8712,0,0,1
+2025,Texas,Storage,Battery Storage,Source label detail,5130161.0000,8712,0,0,0
+2025,Texas,Storage,Unknown Energy Storage,Source label detail,-6355323.0000,8304,0,0,0
+2025,Texas,Storage,All source labels,Source group subtotal,-1225162.0000,17016,0,0,1
+2025,Texas,Wind,Wind without Integrated Battery Storage,Source label detail,114471021.0000,8712,0,0,0
+2025,Texas,Wind,All source labels,Source group subtotal,114471021.0000,8712,0,0,1
+2025,Texas,All source groups,All source labels,Region total,485363594.0000,78000,0,1,1
+2025,All regions,All source groups,All source labels,Grand total,1781305931.0000,380904,1,1,1
