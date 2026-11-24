@@ -1,0 +1,190 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "peak",
+  "position": {
+    "x": 852,
+    "y": 154,
+    "z": 9,
+    "width": 398,
+    "height": 160,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Month"
+                    }
+                  },
+                  "Property": "year_month"
+                }
+              },
+              "queryRef": "Month.year_month",
+              "nativeQueryRef": "year_month"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyPeak"
+                    }
+                  },
+                  "Property": "Peak Demand MW"
+                }
+              },
+              "queryRef": "MonthlyPeak.Peak Demand MW",
+              "nativeQueryRef": "Peak Demand MW"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Authority"
+                    }
+                  },
+                  "Property": "authority_code"
+                }
+              },
+              "queryRef": "Authority.authority_code",
+              "nativeQueryRef": "authority_code"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyPeak"
+                    }
+                  },
+                  "Property": "peak_utc"
+                }
+              },
+              "queryRef": "MonthlyPeak.peak_utc",
+              "nativeQueryRef": "peak_utc"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyPeak"
+                    }
+                  },
+                  "Property": "local_hour_end"
+                }
+              },
+              "queryRef": "MonthlyPeak.local_hour_end",
+              "nativeQueryRef": "local_hour_end"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyPeak"
+                    }
+                  },
+                  "Property": "utc_offset_minutes"
+                }
+              },
+              "queryRef": "MonthlyPeak.utc_offset_minutes",
+              "nativeQueryRef": "utc_offset_minutes"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyPeak"
+                    }
+                  },
+                  "Property": "tied_peak_timestamp_count"
+                }
+              },
+              "queryRef": "MonthlyPeak.tied_peak_timestamp_count",
+              "nativeQueryRef": "tied_peak_timestamp_count"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Month"
+                  }
+                },
+                "Property": "year_month"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly peak by authority (MW)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#15354D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

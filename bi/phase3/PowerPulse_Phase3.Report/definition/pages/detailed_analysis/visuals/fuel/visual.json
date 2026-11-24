@@ -1,0 +1,113 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "fuel",
+  "position": {
+    "x": 24,
+    "y": 502,
+    "z": 13,
+    "width": 600,
+    "height": 204,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "source_group"
+                }
+              },
+              "queryRef": "Fuel.source_group",
+              "nativeQueryRef": "source_group"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "Signed Fuel MWh"
+                }
+              },
+              "queryRef": "Fuel.Signed Fuel MWh",
+              "nativeQueryRef": "Signed Fuel MWh"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "Numeric Fuel Cells"
+                }
+              },
+              "queryRef": "Fuel.Numeric Fuel Cells",
+              "nativeQueryRef": "Numeric Fuel Cells"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Signed net generation by fuel group (MWh)'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#15354D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

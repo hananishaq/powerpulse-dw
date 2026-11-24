@@ -1,0 +1,105 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "fuel_labels",
+  "position": {
+    "x": 634,
+    "y": 502,
+    "z": 14,
+    "width": 616,
+    "height": 204,
+    "tabOrder": 14
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "source_label"
+                }
+              },
+              "queryRef": "Fuel.source_label",
+              "nativeQueryRef": "source_label"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "Signed Fuel MWh"
+                }
+              },
+              "queryRef": "Fuel.Signed Fuel MWh",
+              "nativeQueryRef": "Signed Fuel MWh"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fuel"
+                    }
+                  },
+                  "Property": "Numeric Fuel Cells"
+                }
+              },
+              "queryRef": "Fuel.Numeric Fuel Cells",
+              "nativeQueryRef": "Numeric Fuel Cells"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Original source categories'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#15354D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

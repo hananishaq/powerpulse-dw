@@ -1,0 +1,1154 @@
+{
+  "name": "PowerPulse_Phase3",
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "PgServer",
+        "kind": "m",
+        "expression": "\"localhost\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ]
+      },
+      {
+        "name": "PgDatabase",
+        "kind": "m",
+        "expression": "\"powerpulse_dw\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "MonthlyDemand",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "observed_authority_hours",
+            "dataType": "int64",
+            "sourceColumn": "observed_authority_hours",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_demand_hours",
+            "dataType": "int64",
+            "sourceColumn": "eligible_demand_hours",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "null_actual_hours",
+            "dataType": "int64",
+            "sourceColumn": "null_actual_hours",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "negative_actual_hours",
+            "dataType": "int64",
+            "sourceColumn": "negative_actual_hours",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "observed_demand_mwh",
+            "dataType": "double",
+            "sourceColumn": "observed_demand_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_forecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "eligible_forecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "excluded_forecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "excluded_forecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_actual_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "eligible_actual_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "abs_error_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "abs_error_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "signed_error_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "signed_error_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "underforecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "underforecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "demand_segment",
+            "dataType": "string",
+            "sourceColumn": "demand_segment",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "forecast_error_segment",
+            "dataType": "string",
+            "sourceColumn": "forecast_error_segment",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Observed Demand MWh",
+            "expression": [
+              "SUM(MonthlyDemand[observed_demand_mwh])"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Observed Authority Hours",
+            "expression": [
+              "COALESCE(SUM(MonthlyDemand[observed_authority_hours]), 0)"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Eligible Demand Hours",
+            "expression": [
+              "COALESCE(SUM(MonthlyDemand[eligible_demand_hours]), 0)"
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "Reporting Authorities",
+            "expression": [
+              "COALESCE(CALCULATE(DISTINCTCOUNT(MonthlyDemand[authority_key]), MonthlyDemand[observed_authority_hours] > 0), 0)"
+            ],
+            "formatString": "0"
+          },
+          {
+            "name": "Observed Demand Coverage",
+            "expression": [
+              "DIVIDE([Eligible Demand Hours], [Observed Authority Hours])"
+            ],
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Mean Hourly Demand MW",
+            "expression": [
+              "DIVIDE([Observed Demand MWh], [Eligible Demand Hours])"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Forecast WAPE",
+            "expression": [
+              "DIVIDE(SUM(MonthlyDemand[abs_error_sum_mw]), SUM(MonthlyDemand[eligible_actual_sum_mw]))"
+            ],
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Forecast MAE MW",
+            "expression": [
+              "DIVIDE(SUM(MonthlyDemand[abs_error_sum_mw]), SUM(MonthlyDemand[eligible_forecast_pairs]))"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Forecast Bias MW",
+            "expression": [
+              "DIVIDE(SUM(MonthlyDemand[signed_error_sum_mw]), SUM(MonthlyDemand[eligible_forecast_pairs]))"
+            ],
+            "formatString": "#,0.00"
+          },
+          {
+            "name": "Demand MoM Growth",
+            "expression": [
+              "VAR ThisMonth = SELECTEDVALUE('Month'[month_start])",
+              "VAR CurrentEnergy = [Observed Demand MWh]",
+              "VAR PriorEnergy = CALCULATE([Observed Demand MWh], REMOVEFILTERS('Month'), TREATAS({EDATE(ThisMonth, -1)}, 'Month'[month_start]))",
+              "RETURN IF(HASONEVALUE('Month'[month_start]) && NOT ISBLANK(CurrentEnergy) && NOT ISBLANK(PriorEnergy), DIVIDE(CurrentEnergy - PriorEnergy, PriorEnergy))"
+            ],
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Selected Period",
+            "expression": [
+              "IF(ISEMPTY(VALUES('Month'[month_start])), \"No selected months\", FORMAT(MIN('Month'[month_start]), \"MMM yyyy\") & \" to \" & FORMAT(MAX('Month'[month_start]), \"MMM yyyy\"))"
+            ]
+          },
+          {
+            "name": "Selected Demand Segment",
+            "expression": "VAR MeanMW = [Mean Hourly Demand MW] RETURN SWITCH(TRUE(), ISBLANK(MeanMW), BLANK(), MeanMW < 10000, \"Below 10 GW\", MeanMW < 30000, \"10 to below 30 GW\", \"30 GW or above\")",
+            "formatString": ""
+          }
+        ],
+        "partitions": [
+          {
+            "name": "MonthlyDemand",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_authority_analysis\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"observed_authority_hours\", \"eligible_demand_hours\", \"null_actual_hours\", \"negative_actual_hours\", \"observed_demand_mwh\", \"eligible_forecast_pairs\", \"excluded_forecast_pairs\", \"eligible_actual_sum_mw\", \"abs_error_sum_mw\", \"signed_error_sum_mw\", \"underforecast_pairs\", \"demand_segment\", \"forecast_error_segment\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"observed_authority_hours\", Int64.Type}, {\"eligible_demand_hours\", Int64.Type}, {\"null_actual_hours\", Int64.Type}, {\"negative_actual_hours\", Int64.Type}, {\"observed_demand_mwh\", type number}, {\"eligible_forecast_pairs\", Int64.Type}, {\"excluded_forecast_pairs\", Int64.Type}, {\"eligible_actual_sum_mw\", type number}, {\"abs_error_sum_mw\", type number}, {\"signed_error_sum_mw\", type number}, {\"underforecast_pairs\", Int64.Type}, {\"demand_segment\", type text}, {\"forecast_error_segment\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Month",
+        "columns": [
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "calendar_year",
+            "dataType": "int64",
+            "sourceColumn": "calendar_year",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "month_number",
+            "dataType": "int64",
+            "sourceColumn": "month_number",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "year_month",
+            "dataType": "string",
+            "sourceColumn": "year_month",
+            "summarizeBy": "none",
+            "sortByColumn": "month_start"
+          },
+          {
+            "name": "season",
+            "dataType": "string",
+            "sourceColumn": "season",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Month",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_dashboard_month\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"month_start\", \"calendar_year\", \"month_number\", \"year_month\", \"season\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"month_start\", type datetime}, {\"calendar_year\", Int64.Type}, {\"month_number\", Int64.Type}, {\"year_month\", type text}, {\"season\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Authority",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "authority_code",
+            "dataType": "string",
+            "sourceColumn": "authority_code",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "authority_name",
+            "dataType": "string",
+            "sourceColumn": "authority_name",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "region_name",
+            "dataType": "string",
+            "sourceColumn": "region_name",
+            "summarizeBy": "none"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Authority",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_dw\",Item=\"dim_balancing_authority\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"authority_code\", \"authority_name\", \"region_name\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"authority_code\", type text}, {\"authority_name\", type text}, {\"region_name\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "SeasonalProfile",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "demand_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "demand_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_demand_hours",
+            "dataType": "int64",
+            "sourceColumn": "eligible_demand_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "observed_authority_hours",
+            "dataType": "int64",
+            "sourceColumn": "observed_authority_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "day_type",
+            "dataType": "string",
+            "sourceColumn": "day_type",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Profile Mean MW",
+            "expression": "DIVIDE(SUM(SeasonalProfile[demand_sum_mw]), SUM(SeasonalProfile[eligible_demand_hours]))",
+            "formatString": "#,0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "SeasonalProfile",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q04_month_daytype\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"demand_sum_mw\", \"eligible_demand_hours\", \"observed_authority_hours\", \"day_type\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"demand_sum_mw\", type number}, {\"eligible_demand_hours\", Int64.Type}, {\"observed_authority_hours\", Int64.Type}, {\"day_type\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "MonthlyPeak",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "peak_actual_demand_mw",
+            "dataType": "double",
+            "sourceColumn": "peak_actual_demand_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "utc_offset_minutes",
+            "dataType": "int64",
+            "sourceColumn": "utc_offset_minutes",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "tied_peak_timestamp_count",
+            "dataType": "int64",
+            "sourceColumn": "tied_peak_timestamp_count",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "peak_utc",
+            "dataType": "dateTime",
+            "sourceColumn": "peak_utc",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "local_hour_end",
+            "dataType": "dateTime",
+            "sourceColumn": "local_hour_end",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Peak Demand MW",
+            "expression": "MAX(MonthlyPeak[peak_actual_demand_mw])",
+            "formatString": "#,0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "MonthlyPeak",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_dashboard_peak\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"peak_actual_demand_mw\", \"utc_offset_minutes\", \"tied_peak_timestamp_count\", \"peak_utc\", \"local_hour_end\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"peak_actual_demand_mw\", type number}, {\"utc_offset_minutes\", Int64.Type}, {\"tied_peak_timestamp_count\", Int64.Type}, {\"peak_utc\", type datetime}, {\"local_hour_end\", type datetime}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "ForecastPerformance",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_actual_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "eligible_actual_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "abs_error_sum_mw",
+            "dataType": "double",
+            "sourceColumn": "abs_error_sum_mw",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "eligible_forecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "eligible_forecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Forecast Error Rate",
+            "expression": "DIVIDE(SUM(ForecastPerformance[abs_error_sum_mw]), SUM(ForecastPerformance[eligible_actual_sum_mw]))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "ForecastPerformance",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q05_forecast_accuracy\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"eligible_actual_sum_mw\", \"abs_error_sum_mw\", \"eligible_forecast_pairs\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"eligible_actual_sum_mw\", type number}, {\"abs_error_sum_mw\", type number}, {\"eligible_forecast_pairs\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "ForecastPattern",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "hour_ending",
+            "dataType": "int64",
+            "sourceColumn": "hour_ending",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "underforecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "underforecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "eligible_forecast_pairs",
+            "dataType": "int64",
+            "sourceColumn": "eligible_forecast_pairs",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Underforecast Rate",
+            "expression": "DIVIDE(SUM(ForecastPattern[underforecast_pairs]), SUM(ForecastPattern[eligible_forecast_pairs]))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "ForecastPattern",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_forecast_month_hour_components\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"hour_ending\", \"underforecast_pairs\", \"eligible_forecast_pairs\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"hour_ending\", Int64.Type}, {\"underforecast_pairs\", Int64.Type}, {\"eligible_forecast_pairs\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Fuel",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "signed_generation_mwh",
+            "dataType": "double",
+            "sourceColumn": "signed_generation_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "numeric_observations",
+            "dataType": "int64",
+            "sourceColumn": "numeric_observations",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "observed_negative_hours",
+            "dataType": "int64",
+            "sourceColumn": "observed_negative_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "supplied_blank_hours",
+            "dataType": "int64",
+            "sourceColumn": "supplied_blank_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "absent_header_hours",
+            "dataType": "int64",
+            "sourceColumn": "absent_header_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "source_group",
+            "dataType": "string",
+            "sourceColumn": "source_group",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "source_label",
+            "dataType": "string",
+            "sourceColumn": "source_label",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Signed Fuel MWh",
+            "expression": "SUM(Fuel[signed_generation_mwh])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Numeric Fuel Cells",
+            "expression": "SUM(Fuel[numeric_observations])",
+            "formatString": "#,0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Fuel",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q07_generation_by_source\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"signed_generation_mwh\", \"numeric_observations\", \"observed_negative_hours\", \"supplied_blank_hours\", \"absent_header_hours\", \"source_group\", \"source_label\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"signed_generation_mwh\", type number}, {\"numeric_observations\", Int64.Type}, {\"observed_negative_hours\", Int64.Type}, {\"supplied_blank_hours\", Int64.Type}, {\"absent_header_hours\", Int64.Type}, {\"source_group\", type text}, {\"source_label\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Renewables",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "matched_wind_mwh",
+            "dataType": "double",
+            "sourceColumn": "matched_wind_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "matched_solar_mwh",
+            "dataType": "double",
+            "sourceColumn": "matched_solar_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "matched_reported_mwh",
+            "dataType": "double",
+            "sourceColumn": "matched_reported_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "matched_hours",
+            "dataType": "int64",
+            "sourceColumn": "matched_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "excluded_hours",
+            "dataType": "int64",
+            "sourceColumn": "excluded_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Wind and Solar Share",
+            "expression": "DIVIDE(SUM(Renewables[matched_wind_mwh]) + SUM(Renewables[matched_solar_mwh]), SUM(Renewables[matched_reported_mwh]))",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Matched Renewable Hours",
+            "expression": "SUM(Renewables[matched_hours])",
+            "formatString": "#,0"
+          },
+          {
+            "name": "Excluded Renewable Hours",
+            "expression": "SUM(Renewables[excluded_hours])",
+            "formatString": "#,0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Renewables",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q08_wind_solar_share\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"matched_wind_mwh\", \"matched_solar_mwh\", \"matched_reported_mwh\", \"matched_hours\", \"excluded_hours\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"matched_wind_mwh\", type number}, {\"matched_solar_mwh\", type number}, {\"matched_reported_mwh\", type number}, {\"matched_hours\", Int64.Type}, {\"excluded_hours\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "HighDemandMix",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "signed_group_mwh",
+            "dataType": "double",
+            "sourceColumn": "signed_group_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "signed_total_mwh",
+            "dataType": "double",
+            "sourceColumn": "signed_total_mwh",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "observed_group_hours",
+            "dataType": "int64",
+            "sourceColumn": "observed_group_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "source_group",
+            "dataType": "string",
+            "sourceColumn": "source_group",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "demand_cohort",
+            "dataType": "string",
+            "sourceColumn": "demand_cohort",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Signed Mix Share",
+            "expression": "DIVIDE(SUM(HighDemandMix[signed_group_mwh]), SUMX(SUMMARIZE(HighDemandMix, HighDemandMix[authority_key], HighDemandMix[month_start], HighDemandMix[demand_cohort]), CALCULATE(MAX(HighDemandMix[signed_total_mwh]))))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "HighDemandMix",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q09_high_demand_mix\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"signed_group_mwh\", \"signed_total_mwh\", \"observed_group_hours\", \"source_group\", \"demand_cohort\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"signed_group_mwh\", type number}, {\"signed_total_mwh\", type number}, {\"observed_group_hours\", Int64.Type}, {\"source_group\", type text}, {\"demand_cohort\", type text}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Quality",
+        "columns": [
+          {
+            "name": "authority_key",
+            "dataType": "int64",
+            "sourceColumn": "authority_key",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "month_start",
+            "dataType": "dateTime",
+            "sourceColumn": "month_start",
+            "summarizeBy": "none",
+            "isHidden": true
+          },
+          {
+            "name": "expected_hours",
+            "dataType": "int64",
+            "sourceColumn": "expected_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "affected_core_hours",
+            "dataType": "int64",
+            "sourceColumn": "affected_core_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "absent_row_hours",
+            "dataType": "int64",
+            "sourceColumn": "absent_row_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "comparable_hours",
+            "dataType": "int64",
+            "sourceColumn": "comparable_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          },
+          {
+            "name": "residual_failure_hours",
+            "dataType": "int64",
+            "sourceColumn": "residual_failure_hours",
+            "summarizeBy": "none",
+            "isHidden": false
+          }
+        ],
+        "measures": [
+          {
+            "name": "Residual Failure Rate",
+            "expression": "DIVIDE(SUM(Quality[residual_failure_hours]), SUM(Quality[comparable_hours]))",
+            "formatString": "0.00%"
+          },
+          {
+            "name": "Affected Core Hour Rate",
+            "expression": "DIVIDE(SUM(Quality[affected_core_hours]), SUM(Quality[expected_hours]))",
+            "formatString": "0.00%"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Quality",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = PostgreSQL.Database(PgServer, PgDatabase),",
+                "    Data = Source{[Schema=\"project_reporting\",Item=\"vw_q10_source_quality\"]}[Data],",
+                "    Selected = Table.SelectColumns(Data, {\"authority_key\", \"month_start\", \"expected_hours\", \"affected_core_hours\", \"absent_row_hours\", \"comparable_hours\", \"residual_failure_hours\"}),",
+                "    Typed = Table.TransformColumnTypes(Selected, {{\"authority_key\", Int64.Type}, {\"month_start\", type datetime}, {\"expected_hours\", Int64.Type}, {\"affected_core_hours\", Int64.Type}, {\"absent_row_hours\", Int64.Type}, {\"comparable_hours\", Int64.Type}, {\"residual_failure_hours\", Int64.Type}})",
+                "in",
+                "    Typed"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "monthly_authority",
+        "fromTable": "MonthlyDemand",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "monthly_month",
+        "fromTable": "MonthlyDemand",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "SeasonalProfile_Authority",
+        "fromTable": "SeasonalProfile",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "SeasonalProfile_Month",
+        "fromTable": "SeasonalProfile",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "MonthlyPeak_Authority",
+        "fromTable": "MonthlyPeak",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "MonthlyPeak_Month",
+        "fromTable": "MonthlyPeak",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "ForecastPerformance_Authority",
+        "fromTable": "ForecastPerformance",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "ForecastPerformance_Month",
+        "fromTable": "ForecastPerformance",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "ForecastPattern_Authority",
+        "fromTable": "ForecastPattern",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "ForecastPattern_Month",
+        "fromTable": "ForecastPattern",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Fuel_Authority",
+        "fromTable": "Fuel",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Fuel_Month",
+        "fromTable": "Fuel",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Renewables_Authority",
+        "fromTable": "Renewables",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Renewables_Month",
+        "fromTable": "Renewables",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "HighDemandMix_Authority",
+        "fromTable": "HighDemandMix",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "HighDemandMix_Month",
+        "fromTable": "HighDemandMix",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Quality_Authority",
+        "fromTable": "Quality",
+        "fromColumn": "authority_key",
+        "toTable": "Authority",
+        "toColumn": "authority_key",
+        "crossFilteringBehavior": "oneDirection"
+      },
+      {
+        "name": "Quality_Month",
+        "fromTable": "Quality",
+        "fromColumn": "month_start",
+        "toTable": "Month",
+        "toColumn": "month_start",
+        "crossFilteringBehavior": "oneDirection"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"PgServer\",\"PgDatabase\",\"MonthlyDemand\",\"Month\",\"Authority\",\"SeasonalProfile\",\"MonthlyPeak\",\"ForecastPerformance\",\"ForecastPattern\",\"Fuel\",\"Renewables\",\"HighDemandMix\",\"Quality\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ]
+  }
+}

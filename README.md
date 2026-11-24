@@ -1,5 +1,7 @@
 # PowerPulse — Electricity Demand & Generation Data Warehouse
 
+**Final evaluation:** [Phase 3 deliverables, setup, and verification](docs/phase3/FINAL_EVALUATION.md).
+
 **DL3004 Data Warehouse & Business Intelligence Lab — Final Project**
 FAST NUCES Lahore · Submitted to: Mr Shahzeb Mubashar
 
@@ -23,8 +25,8 @@ conformed dimensions. Source: official EIA bulk CSVs — no synthetic data.
 | Phase | Scope | Status |
 |---|---|---|
 | 1 | Business analysis & dimensional design (30%) | ✅ Complete — see `docs/phase1/` |
-| 2 | Physical DW implementation & ETL pipeline (40%) | 🔧 In progress — task board `docs/phase2/TASKS.md`, plan `docs/phase2/PHASE2_PLAN.md` |
-| 3 | OLAP analytics, performance & BI (30%) | Mohid's contribution complete: Q01/Q02, populated Executive Overview PBIX, PDF and handoff; team integration pending — [run guide](docs/phase3/README.md) |
+| 2 | Physical DW implementation & ETL pipeline (40%) | Warehouse and ETL on main. Formal quality package and report on the [quality branch](https://github.com/hananishaq/powerpulse-dw/tree/mohid/phase2-quality-reporting). |
+| 3 | OLAP analytics, performance & BI (30%) | Q01–Q10, OLAP, three-page Power BI project, reports and presentation. Native PBIX and screenshots pending Windows acceptance. |
 
 ## Measured source facts (Phase 1 evidence)
 

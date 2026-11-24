@@ -1,0 +1,113 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "mix",
+  "position": {
+    "x": 24,
+    "y": 324,
+    "z": 9,
+    "width": 600,
+    "height": 288,
+    "tabOrder": 9
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HighDemandMix"
+                    }
+                  },
+                  "Property": "source_group"
+                }
+              },
+              "queryRef": "HighDemandMix.source_group",
+              "nativeQueryRef": "source_group"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HighDemandMix"
+                    }
+                  },
+                  "Property": "Signed Mix Share"
+                }
+              },
+              "queryRef": "HighDemandMix.Signed Mix Share",
+              "nativeQueryRef": "Signed Mix Share"
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "HighDemandMix"
+                    }
+                  },
+                  "Property": "demand_cohort"
+                }
+              },
+              "queryRef": "HighDemandMix.demand_cohort",
+              "nativeQueryRef": "demand_cohort"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Signed fuel mix by demand cohort'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#15354D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

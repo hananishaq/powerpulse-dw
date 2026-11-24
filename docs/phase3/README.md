@@ -1,5 +1,7 @@
 # Phase 3: Mohid's demand and Executive Overview package
 
+See the [final evaluation package](FINAL_EVALUATION.md) for the integrated Q01–Q10 release, dashboard project and submission inventory. The notes below describe Mohid’s contributed package.
+
 This folder documents Mohid's completed demand and Executive Overview
 contribution. Other students' outputs remain separate team deliverables.
 

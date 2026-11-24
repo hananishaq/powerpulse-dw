@@ -1,0 +1,580 @@
+{
+  "postgresql": "16.2",
+  "source_manifest_sha256": "8f18f4984d77b57fc063900b3c1c7a37c7b82819d5ac18eaebd17d91ecd8e0b8",
+  "sql_reconciliation": "passed",
+  "pbix_desktop": "not run",
+  "sql_result_filter_checks": {
+    "both_years": {
+      "demand": {
+        "demand_mwh": "3579543533.0000",
+        "observed_hours": "87720",
+        "eligible_hours": "87502"
+      },
+      "forecast": {
+        "wape": "0.03590155543929012894",
+        "pairs": "87399"
+      },
+      "renewables": {
+        "matched_hours": "80513",
+        "excluded_hours": "7207",
+        "share": "0.19948767812254674789",
+        "numerator": "565048413.0000",
+        "denominator": "2832497818.0000"
+      }
+    },
+    "2025": {
+      "demand": {
+        "demand_mwh": "1816431180.0000",
+        "observed_hours": "43800",
+        "eligible_hours": "43677"
+      },
+      "forecast": {
+        "wape": "0.03660467729673766882",
+        "pairs": "43603"
+      },
+      "renewables": {
+        "matched_hours": "42543",
+        "excluded_hours": "1257",
+        "share": "0.18728399014917436835",
+        "numerator": "312862008.0000",
+        "denominator": "1670521905.0000"
+      }
+    },
+    "pjm_june_2025": {
+      "demand": {
+        "demand_mwh": "74767915.0000",
+        "observed_hours": "720",
+        "eligible_hours": "720"
+      },
+      "forecast": {
+        "wape": "0.04160212304970654859",
+        "pairs": "720"
+      },
+      "renewables": {
+        "matched_hours": "711",
+        "excluded_hours": "9",
+        "share": "0.05766261285793702914",
+        "numerator": "4459846.0000",
+        "denominator": "77343807.0000"
+      }
+    },
+    "pjm_june_and_august": {
+      "demand": {
+        "demand_mwh": "150114984.0000",
+        "observed_hours": "1464",
+        "eligible_hours": "1464"
+      },
+      "forecast": {
+        "wape": "0.04007527323188469980",
+        "pairs": "1464"
+      },
+      "renewables": {
+        "matched_hours": "1449",
+        "excluded_hours": "15",
+        "share": "0.05310877607442407379",
+        "numerator": "8345177.0000",
+        "denominator": "157133672.0000"
+      }
+    },
+    "empty": {
+      "demand": {
+        "demand_mwh": null,
+        "observed_hours": null,
+        "eligible_hours": null
+      },
+      "forecast": {
+        "wape": null,
+        "pairs": null
+      },
+      "renewables": {
+        "matched_hours": null,
+        "excluded_hours": null,
+        "share": null,
+        "numerator": null,
+        "denominator": null
+      }
+    }
+  },
+  "warehouse_model_import_row_counts": {
+    "MonthlyDemand": 120,
+    "Month": 24,
+    "Authority": 5,
+    "SeasonalProfile": 240,
+    "MonthlyPeak": 120,
+    "ForecastPerformance": 120,
+    "ForecastPattern": 2880,
+    "Fuel": 2280,
+    "Renewables": 120,
+    "HighDemandMix": 2400,
+    "Quality": 120
+  },
+  "report_visual_bindings_checked": 39,
+  "findings": {
+    "yearly_demand": [
+      {
+        "calendar_year": 2024,
+        "mwh": "1763112353.0000",
+        "hours": "43825"
+      },
+      {
+        "calendar_year": 2025,
+        "mwh": "1816431180.0000",
+        "hours": "43677"
+      }
+    ],
+    "monthly_demand": [
+      {
+        "month_start": "2024-01-01",
+        "mwh": "155571956.0000"
+      },
+      {
+        "month_start": "2024-02-01",
+        "mwh": "132383462.0000"
+      },
+      {
+        "month_start": "2024-03-01",
+        "mwh": "129951044.0000"
+      },
+      {
+        "month_start": "2024-04-01",
+        "mwh": "125914026.0000"
+      },
+      {
+        "month_start": "2024-05-01",
+        "mwh": "140556169.0000"
+      },
+      {
+        "month_start": "2024-06-01",
+        "mwh": "161124382.0000"
+      },
+      {
+        "month_start": "2024-07-01",
+        "mwh": "178423079.0000"
+      },
+      {
+        "month_start": "2024-08-01",
+        "mwh": "175075165.0000"
+      },
+      {
+        "month_start": "2024-09-01",
+        "mwh": "146871572.0000"
+      },
+      {
+        "month_start": "2024-10-01",
+        "mwh": "138220183.0000"
+      },
+      {
+        "month_start": "2024-11-01",
+        "mwh": "128838595.0000"
+      },
+      {
+        "month_start": "2024-12-01",
+        "mwh": "150182720.0000"
+      },
+      {
+        "month_start": "2025-01-01",
+        "mwh": "165636444.0000"
+      },
+      {
+        "month_start": "2025-02-01",
+        "mwh": "140969316.0000"
+      },
+      {
+        "month_start": "2025-03-01",
+        "mwh": "136036204.0000"
+      },
+      {
+        "month_start": "2025-04-01",
+        "mwh": "131083569.0000"
+      },
+      {
+        "month_start": "2025-05-01",
+        "mwh": "139784627.0000"
+      },
+      {
+        "month_start": "2025-06-01",
+        "mwh": "162150102.0000"
+      },
+      {
+        "month_start": "2025-07-01",
+        "mwh": "183572218.0000"
+      },
+      {
+        "month_start": "2025-08-01",
+        "mwh": "171549828.0000"
+      },
+      {
+        "month_start": "2025-09-01",
+        "mwh": "151680793.0000"
+      },
+      {
+        "month_start": "2025-10-01",
+        "mwh": "141409765.0000"
+      },
+      {
+        "month_start": "2025-11-01",
+        "mwh": "135497429.0000"
+      },
+      {
+        "month_start": "2025-12-01",
+        "mwh": "157060885.0000"
+      }
+    ],
+    "profile": [
+      {
+        "authority_code": "PJM",
+        "mean": "94580.019803113553"
+      },
+      {
+        "authority_code": "ERCO",
+        "mean": "54246.054240969364"
+      },
+      {
+        "authority_code": "CISO",
+        "mean": "25553.090440165062"
+      },
+      {
+        "authority_code": "NYIS",
+        "mean": "17238.338748290014"
+      },
+      {
+        "authority_code": "ISNE",
+        "mean": "13092.733154714400"
+      }
+    ],
+    "fuel": [
+      {
+        "source_group": "Gas",
+        "mwh": "1558425525.0000",
+        "cells": "87473",
+        "negative_cells": "0"
+      },
+      {
+        "source_group": "Nuclear",
+        "mwh": "765978717.0000",
+        "cells": "87472",
+        "negative_cells": "0"
+      },
+      {
+        "source_group": "Coal",
+        "mwh": "390090728.0000",
+        "cells": "84376",
+        "negative_cells": "4035"
+      },
+      {
+        "source_group": "Wind",
+        "mwh": "349926253.0000",
+        "cells": "87473",
+        "negative_cells": "0"
+      },
+      {
+        "source_group": "Solar",
+        "mwh": "252533219.0000",
+        "cells": "97553",
+        "negative_cells": "6405"
+      },
+      {
+        "source_group": "Hydro/storage",
+        "mwh": "141924149.0000",
+        "cells": "97505",
+        "negative_cells": "44"
+      },
+      {
+        "source_group": "Other/unknown",
+        "mwh": "40717204.0000",
+        "cells": "87473",
+        "negative_cells": "9303"
+      },
+      {
+        "source_group": "Petroleum",
+        "mwh": "12367898.0000",
+        "cells": "67529",
+        "negative_cells": "969"
+      },
+      {
+        "source_group": "Geothermal",
+        "mwh": "284210.0000",
+        "cells": "384",
+        "negative_cells": "0"
+      },
+      {
+        "source_group": "Storage",
+        "mwh": "-1216084.0000",
+        "cells": "30482",
+        "negative_cells": "10251"
+      }
+    ],
+    "peaks": [
+      {
+        "authority_code": "PJM",
+        "month_start": "2025-06-01",
+        "mw": "160560.0000",
+        "utc_hour_end": "2025-06-23 22:00:00+00:00"
+      },
+      {
+        "authority_code": "PJM",
+        "month_start": "2025-07-01",
+        "mw": "154380.0000",
+        "utc_hour_end": "2025-07-29 22:00:00+00:00"
+      },
+      {
+        "authority_code": "PJM",
+        "month_start": "2024-07-01",
+        "mw": "153121.0000",
+        "utc_hour_end": "2024-07-16 22:00:00+00:00"
+      },
+      {
+        "authority_code": "PJM",
+        "month_start": "2024-08-01",
+        "mw": "149274.0000",
+        "utc_hour_end": "2024-08-01 22:00:00+00:00"
+      },
+      {
+        "authority_code": "PJM",
+        "month_start": "2024-06-01",
+        "mw": "147976.0000",
+        "utc_hour_end": "2024-06-21 22:00:00+00:00"
+      }
+    ],
+    "forecast": [
+      {
+        "authority_code": "CISO",
+        "wape": "0.07517648026239193910",
+        "pairs": "17375"
+      },
+      {
+        "authority_code": "PJM",
+        "wape": "0.03488938256064270574",
+        "pairs": "17471"
+      },
+      {
+        "authority_code": "NYIS",
+        "wape": "0.03254310431410912857",
+        "pairs": "17539"
+      },
+      {
+        "authority_code": "ISNE",
+        "wape": "0.02454234389390381466",
+        "pairs": "17542"
+      },
+      {
+        "authority_code": "ERCO",
+        "wape": "0.02308218897028359372",
+        "pairs": "17472"
+      }
+    ],
+    "renewables": [
+      {
+        "authority_code": "ERCO",
+        "matched": "17411",
+        "excluded": "133",
+        "share": "0.36008109332059277443"
+      },
+      {
+        "authority_code": "CISO",
+        "matched": "17448",
+        "excluded": "96",
+        "share": "0.35613772050074006458"
+      },
+      {
+        "authority_code": "PJM",
+        "matched": "10596",
+        "excluded": "6948",
+        "share": "0.06469301026500174924"
+      },
+      {
+        "authority_code": "ISNE",
+        "matched": "17542",
+        "excluded": "2",
+        "share": "0.05175242515126154002"
+      },
+      {
+        "authority_code": "NYIS",
+        "matched": "17516",
+        "excluded": "28",
+        "share": "0.04980882020757614274"
+      }
+    ],
+    "quality": [
+      {
+        "authority_code": "ISNE",
+        "expected": "17544",
+        "absent": "0",
+        "affected": "2",
+        "failed": "0",
+        "comparable": "17542",
+        "rate": "0E-24",
+        "blank_fuel_cells": "85112",
+        "absent_header_cells": "83201"
+      },
+      {
+        "authority_code": "NYIS",
+        "expected": "17544",
+        "absent": "0",
+        "affected": "0",
+        "failed": "0",
+        "comparable": "17516",
+        "rate": "0E-24",
+        "blank_fuel_cells": "110007",
+        "absent_header_cells": "83201"
+      },
+      {
+        "authority_code": "ERCO",
+        "expected": "17544",
+        "absent": "0",
+        "affected": "72",
+        "failed": "85",
+        "comparable": "17496",
+        "rate": "0.00485825331504343850",
+        "blank_fuel_cells": "107285",
+        "absent_header_cells": "83201"
+      },
+      {
+        "authority_code": "PJM",
+        "expected": "17544",
+        "absent": "0",
+        "affected": "73",
+        "failed": "6873",
+        "comparable": "17469",
+        "rate": "0.39343980765928215696",
+        "blank_fuel_cells": "110383",
+        "absent_header_cells": "83201"
+      },
+      {
+        "authority_code": "CISO",
+        "expected": "17544",
+        "absent": "0",
+        "affected": "169",
+        "failed": "0",
+        "comparable": "17448",
+        "rate": "0E-24",
+        "blank_fuel_cells": "110168",
+        "absent_header_cells": "83201"
+      }
+    ],
+    "pjm_mix": [
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Coal",
+        "share": "0.18957464411144130726"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Gas",
+        "share": "0.46474319946136270547"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Geothermal",
+        "share": null
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Hydro/storage",
+        "share": "0.03186221831703929124"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Nuclear",
+        "share": "0.21894285966755929218"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Other/unknown",
+        "share": "0.01645099720366481946"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Petroleum",
+        "share": "0.01966138088561965048"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Solar",
+        "share": "0.04904833950529632273"
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Storage",
+        "share": null
+      },
+      {
+        "demand_cohort": "High demand",
+        "source_group": "Wind",
+        "share": "0.00971636084801661118"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Coal",
+        "share": "0.17490992636863109741"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Gas",
+        "share": "0.44024551193566785624"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Geothermal",
+        "share": null
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Hydro/storage",
+        "share": "0.01734446513826628845"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Nuclear",
+        "share": "0.29704723684147846855"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Other/unknown",
+        "share": "0.01519099940178601094"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Petroleum",
+        "share": "0.00614479802450733476"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Solar",
+        "share": "0.03228525081399549360"
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Storage",
+        "share": null
+      },
+      {
+        "demand_cohort": "Other demand",
+        "source_group": "Wind",
+        "share": "0.01683181147566745006"
+      }
+    ],
+    "rollup": [
+      {
+        "rows": 93
+      }
+    ],
+    "cube": [
+      {
+        "rows": 30
+      }
+    ]
+  },
+  "repeated_transactional_install": "passed",
+  "edge_checks": {
+    "Q08": "Five exclusion branches and no eligible hours passed, via rolled-back changes on disposable database",
+    "Q10": "Removing an observation increased absent hours without changing the expected count, via rolled-back changes"
+  },
+  "power_bi_schema_documents_checked": 50,
+  "phase2_quality_branch": {
+    "commit": "52990f81423f1d55489e4a0ccc306fb1a7d8e9f6",
+    "status": "passed",
+    "checks": 61,
+    "run_id": "47280a1e-d677-4079-b63c-229b05d1137c"
+  }
+}

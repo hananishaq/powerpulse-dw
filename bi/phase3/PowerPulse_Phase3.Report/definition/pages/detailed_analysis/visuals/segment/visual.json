@@ -1,0 +1,105 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "segment",
+  "position": {
+    "x": 24,
+    "y": 322,
+    "z": 10,
+    "width": 398,
+    "height": 172,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Authority"
+                    }
+                  },
+                  "Property": "authority_code"
+                }
+              },
+              "queryRef": "Authority.authority_code",
+              "nativeQueryRef": "authority_code"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyDemand"
+                    }
+                  },
+                  "Property": "Mean Hourly Demand MW"
+                }
+              },
+              "queryRef": "MonthlyDemand.Mean Hourly Demand MW",
+              "nativeQueryRef": "Mean Hourly Demand MW"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MonthlyDemand"
+                    }
+                  },
+                  "Property": "Selected Demand Segment"
+                }
+              },
+              "queryRef": "MonthlyDemand.Selected Demand Segment",
+              "nativeQueryRef": "Selected Demand Segment"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Authority planning segments'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#15354D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
