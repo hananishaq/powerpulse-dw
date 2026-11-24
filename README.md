@@ -26,7 +26,7 @@ conformed dimensions. Source: official EIA bulk CSVs — no synthetic data.
 |---|---|---|
 | 1 | Business analysis & dimensional design (30%) | ✅ Complete — see `docs/phase1/` |
 | 2 | Physical DW implementation & ETL pipeline (40%) | Warehouse and ETL on main. Formal quality package and report on the [quality branch](https://github.com/hananishaq/powerpulse-dw/tree/mohid/phase2-quality-reporting). |
-| 3 | OLAP analytics, performance & BI (30%) | Q01–Q10, OLAP, three-page Power BI project, reports and presentation. Native PBIX and screenshots pending Windows acceptance. |
+| 3 | OLAP analytics, performance & BI (30%) | Q01–Q10, OLAP, three-page Power BI project, reports and presentation. Native PBIX and three-page screenshot PDF included. See the [evaluation package](docs/phase3/FINAL_EVALUATION.md). |
 
 ## Measured source facts (Phase 1 evidence)
 

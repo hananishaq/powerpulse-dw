@@ -49,7 +49,8 @@ unique authority-month-cohort, avoiding repeated denominator rows. Q08 divides
 matched wind plus solar energy by matched reported total generation. SQL
 percentage points and DAX percentage formats use different scaling.
 
-The three-page PBIP has been checked against PostgreSQL result schemas and
-values using SQL. The report definitions were built in Linux. Native Desktop
-opening, DAX and visual interaction tests, warehouse refresh, PBIX save, and
-screenshot export require Windows acceptance.
+Emaad opened and refreshed the report in Power BI Desktop on Windows. All
+three pages populated, and the Executive Overview showed 720 authority-hours
+and one reporting authority for PJM in June 2025. The repository includes the
+[saved PBIX](PowerPulse_Phase3.pbix) and the
+[three-page Desktop export](../../reports/phase3/final/Dashboard_Screenshots.pdf).

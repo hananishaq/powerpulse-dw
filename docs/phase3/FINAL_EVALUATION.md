@@ -13,8 +13,8 @@ contains no modeled sales transactions.
 | OLAP SQL | [Generation ROLLUP and demand CUBE](../../sql/08_phase3_olap/) |
 | Reporting SQL | [Reporting views](../../sql/06_reporting/) |
 | Indexing Report | [Indexing_Report.pdf](../../reports/phase3/Indexing_Report.pdf) |
-| Power BI Dashboard | [Three-page PBIP](../../bi/phase3/PowerPulse_Phase3.pbip) with [refresh and PBIX export instructions](../../bi/phase3/model_and_refresh.md). Native PBIX save requires Desktop. |
-| Dashboard Screenshots | [SQL-backed Dashboard Preview PDF](../../reports/phase3/final/Dashboard_Preview.pdf). Native screenshots require Desktop export. |
+| Power BI Dashboard | [PowerPulse_Phase3.pbix](../../bi/phase3/PowerPulse_Phase3.pbix), [editable PBIP source](../../bi/phase3/PowerPulse_Phase3.pbip), and [refresh guide](../../bi/phase3/model_and_refresh.md) |
+| Dashboard Screenshots | [Dashboard_Screenshots.pdf](../../reports/phase3/final/Dashboard_Screenshots.pdf), exported from Power BI Desktop |
 | Business Insights Report | [Business_Insights_Report.pdf](../../reports/phase3/final/Business_Insights_Report.pdf) |
 | Final Presentation | [PowerPulse_Final_Presentation.pptx](../../presentation/phase3/PowerPulse_Final_Presentation.pptx) |
 
@@ -64,8 +64,11 @@ indexes and changes no staged or warehouse facts.
   The branch was checked independently with a fresh PostgreSQL 16.2 warehouse
   and passed all 61 checks, including its negative tests. Its scripts and
   alternate reporting views were kept on their existing branch.
-- SQL installation, rerun and fact reconciliation are checked. Teammate
-  sign-off and the native Windows PBIX and screenshots are pending.
+- SQL installation, rerun and fact reconciliation passed. Emaad refreshed the
+  report in Power BI Desktop on Windows, confirmed that the PJM June 2025
+  selection showed 720 authority-hours and one reporting authority, and saved
+  the native PBIX and screenshot PDF. The PDF confirms all three pages and the
+  full-selection baseline totals. Independent teammate sign-off was not recorded.
 
 ## Source interpretation
 

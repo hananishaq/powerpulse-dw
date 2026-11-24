@@ -2,7 +2,7 @@
   "postgresql": "16.2",
   "source_manifest_sha256": "8f18f4984d77b57fc063900b3c1c7a37c7b82819d5ac18eaebd17d91ecd8e0b8",
   "sql_reconciliation": "passed",
-  "pbix_desktop": "not run",
+  "pbix_desktop": "Opened, refreshed against PostgreSQL and saved by Emaad on Windows",
   "sql_result_filter_checks": {
     "both_years": {
       "demand": {
@@ -576,5 +576,33 @@
     "status": "passed",
     "checks": 61,
     "run_id": "47280a1e-d677-4079-b63c-229b05d1137c"
+  },
+  "desktop_acceptance": {
+    "pages": [
+      "Executive Overview",
+      "Detailed Analysis",
+      "Decision Page"
+    ],
+    "full_selection": {
+      "observed_demand_mwh": 3579543533,
+      "observed_authority_hours": 87720,
+      "reporting_authorities": 5,
+      "wind_solar_share_pct_displayed": 19.95
+    },
+    "executive_filter_check": {
+      "authority": "PJM",
+      "operating_month": "2025-06",
+      "observed_authority_hours": 720,
+      "reporting_authorities": 1
+    },
+    "export_verification": {
+      "pbix_archive_integrity": "passed",
+      "pbix_contains_data_model": true,
+      "desktop_pdf_pages": 3
+    },
+    "sha256": {
+      "bi/phase3/PowerPulse_Phase3.pbix": "6bf19fab5addd62a8cf4e248ff7349012a6f73146c2a0ed4418213b15a72f4cd",
+      "reports/phase3/final/Dashboard_Screenshots.pdf": "7e29e306dcbf01e6e39bd5d837e97e2e199780f5202fcc421f7324352ab059c4"
+    }
   }
 }
