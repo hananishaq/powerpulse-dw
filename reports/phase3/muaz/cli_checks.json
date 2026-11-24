@@ -1,0 +1,14 @@
+[
+  {
+    "command": ".venv/Scripts/python.exe etl/06_run_phase3_muaz.py --from-month 2025-06-02 --to-month 2025-07-01",
+    "exit_code": 2,
+    "expected_exit_code": 2,
+    "passed": true
+  },
+  {
+    "command": ".venv/Scripts/python.exe etl/07_benchmark_phase3_muaz.py --disposable",
+    "exit_code": 2,
+    "expected_exit_code": 2,
+    "passed": true
+  }
+]

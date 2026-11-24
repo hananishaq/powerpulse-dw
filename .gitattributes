@@ -1,0 +1,16 @@
+# PDFs may contain only ASCII bytes but must never undergo newline conversion.
+*.pdf binary
+
+# Keep Muaz's hashed implementation and slide source reproducible across OSes.
+etl/06_run_phase3_muaz.py text eol=lf
+etl/07_benchmark_phase3_muaz.py text eol=lf
+reports/phase3/build_indexing_report.py text eol=lf
+sql/06_reporting/p3_forecast_views.sql text eol=lf
+sql/07_phase3_analytics/p3*.sql text eol=lf
+sql/09_phase3_performance/*.sql text eol=lf
+tests/phase3_muaz_checks.py text eol=lf
+presentation/phase3/muaz_slide_contributions.md text eol=lf
+
+# Preserve original CSV newline bytes and measured evidence in this package.
+reports/phase3/muaz/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+reports/phase3/performance/** -text whitespace=trailing-space,space-before-tab,cr-at-eol

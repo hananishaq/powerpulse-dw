@@ -70,6 +70,15 @@ This small shared component calculation lets Mohid's package run independently
 of Q05. Muaz remains the owner of Q05/Q06; compare his results with these
 components rather than introducing a second definition.
 
+Muaz's implementation is now supplied in `sql/06_reporting/p3_forecast_views.sql`.
+`vw_q05_forecast_accuracy` exposes those same components at authority/month
+grain and reconciles with authority analysis. `vw_q06_underforecast_pattern`
+is the authority/year/season/local-hour analytical output;
+`vw_forecast_month_hour_components` retains month for Q06 BI filters.
+See `docs/phase3/muaz_forecast_performance.md` for the full contract, run order,
+Power BI measures and measured benchmark handoff. Emaad's review and master
+PBIX integration remain pending.
+
 ### Planning segments
 
 `demand_segment` uses mean demand: below 10 GW, 10 to below 30 GW, 30 GW or

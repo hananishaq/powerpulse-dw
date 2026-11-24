@@ -1,0 +1,264 @@
+{
+  "created_at_utc": "2026-11-24T18:07:56.743614+00:00",
+  "commit": "81ed32c30f7cceb374fb94a6716cc4f073ac8aa2",
+  "working_tree_note": "Muaz files are working-tree additions; exact SQL hashes recorded below.",
+  "postgresql": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "host_platform": "Windows-11-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+  "logical_cpus": 8,
+  "cache_policy": "Warm cache; one unrecorded warm-up and five measured executions per query per arm; no OS cache flushing.",
+  "settings": {
+    "default_statistics_target": "100",
+    "effective_cache_size": "524288",
+    "jit": "off",
+    "max_parallel_workers_per_gather": "0",
+    "random_page_cost": "4",
+    "seq_page_cost": "1",
+    "shared_buffers": "16384",
+    "work_mem": "32768"
+  },
+  "counts": {
+    "fact_hourly_demand": 87720,
+    "fact_hourly_generation": 727720,
+    "dim_date": 731,
+    "dim_energy_source": 19
+  },
+  "indexes_before": [
+    {
+      "table": "dim_balancing_authority",
+      "name": "dim_balancing_authority_pkey",
+      "definition": "CREATE UNIQUE INDEX dim_balancing_authority_pkey ON project_dw.dim_balancing_authority USING btree (authority_key)"
+    },
+    {
+      "table": "dim_balancing_authority",
+      "name": "uq_dim_balancing_authority_code",
+      "definition": "CREATE UNIQUE INDEX uq_dim_balancing_authority_code ON project_dw.dim_balancing_authority USING btree (authority_code)"
+    },
+    {
+      "table": "dim_date",
+      "name": "dim_date_pkey",
+      "definition": "CREATE UNIQUE INDEX dim_date_pkey ON project_dw.dim_date USING btree (date_key)"
+    },
+    {
+      "table": "dim_date",
+      "name": "uq_dim_date_calendar_date",
+      "definition": "CREATE UNIQUE INDEX uq_dim_date_calendar_date ON project_dw.dim_date USING btree (calendar_date)"
+    },
+    {
+      "table": "dim_energy_source",
+      "name": "dim_energy_source_pkey",
+      "definition": "CREATE UNIQUE INDEX dim_energy_source_pkey ON project_dw.dim_energy_source USING btree (energy_source_key)"
+    },
+    {
+      "table": "dim_energy_source",
+      "name": "uq_dim_energy_source_column",
+      "definition": "CREATE UNIQUE INDEX uq_dim_energy_source_column ON project_dw.dim_energy_source USING btree (source_column)"
+    },
+    {
+      "table": "dim_hour",
+      "name": "dim_hour_pkey",
+      "definition": "CREATE UNIQUE INDEX dim_hour_pkey ON project_dw.dim_hour USING btree (hour_key)"
+    },
+    {
+      "table": "dim_hour",
+      "name": "uq_dim_hour_hour_ending",
+      "definition": "CREATE UNIQUE INDEX uq_dim_hour_hour_ending ON project_dw.dim_hour USING btree (hour_ending)"
+    },
+    {
+      "table": "dim_source_snapshot",
+      "name": "dim_source_snapshot_pkey",
+      "definition": "CREATE UNIQUE INDEX dim_source_snapshot_pkey ON project_dw.dim_source_snapshot USING btree (source_snapshot_key)"
+    },
+    {
+      "table": "dim_source_snapshot",
+      "name": "uq_dim_source_snapshot_file_hash",
+      "definition": "CREATE UNIQUE INDEX uq_dim_source_snapshot_file_hash ON project_dw.dim_source_snapshot USING btree (file_name, sha256)"
+    },
+    {
+      "table": "etl_reject",
+      "name": "etl_reject_pkey",
+      "definition": "CREATE UNIQUE INDEX etl_reject_pkey ON project_dw.etl_reject USING btree (reject_key)"
+    },
+    {
+      "table": "etl_reject",
+      "name": "idx_etl_reject_run_id",
+      "definition": "CREATE INDEX idx_etl_reject_run_id ON project_dw.etl_reject USING btree (run_id)"
+    },
+    {
+      "table": "etl_reject",
+      "name": "idx_etl_reject_step_name",
+      "definition": "CREATE INDEX idx_etl_reject_step_name ON project_dw.etl_reject USING btree (step_name)"
+    },
+    {
+      "table": "etl_run_log",
+      "name": "etl_run_log_pkey",
+      "definition": "CREATE UNIQUE INDEX etl_run_log_pkey ON project_dw.etl_run_log USING btree (run_log_key)"
+    },
+    {
+      "table": "etl_run_log",
+      "name": "idx_etl_run_log_run_id",
+      "definition": "CREATE INDEX idx_etl_run_log_run_id ON project_dw.etl_run_log USING btree (run_id)"
+    },
+    {
+      "table": "etl_run_log",
+      "name": "idx_etl_run_log_status",
+      "definition": "CREATE INDEX idx_etl_run_log_status ON project_dw.etl_run_log USING btree (status)"
+    },
+    {
+      "table": "expected_hour_grid",
+      "name": "expected_hour_grid_pkey",
+      "definition": "CREATE UNIQUE INDEX expected_hour_grid_pkey ON project_dw.expected_hour_grid USING btree (authority_key, utc_hour_end)"
+    },
+    {
+      "table": "expected_hour_grid",
+      "name": "idx_expected_hour_grid_utc_hour_end",
+      "definition": "CREATE INDEX idx_expected_hour_grid_utc_hour_end ON project_dw.expected_hour_grid USING btree (utc_hour_end)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "fact_hourly_demand_pkey",
+      "definition": "CREATE UNIQUE INDEX fact_hourly_demand_pkey ON project_dw.fact_hourly_demand USING btree (demand_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_demand_authority_key",
+      "definition": "CREATE INDEX idx_demand_authority_key ON project_dw.fact_hourly_demand USING btree (authority_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_demand_date_key",
+      "definition": "CREATE INDEX idx_demand_date_key ON project_dw.fact_hourly_demand USING btree (date_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_demand_hour_key",
+      "definition": "CREATE INDEX idx_demand_hour_key ON project_dw.fact_hourly_demand USING btree (hour_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_demand_snapshot_key",
+      "definition": "CREATE INDEX idx_demand_snapshot_key ON project_dw.fact_hourly_demand USING btree (source_snapshot_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_fact_hourly_demand_date_key",
+      "definition": "CREATE INDEX idx_fact_hourly_demand_date_key ON project_dw.fact_hourly_demand USING btree (date_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_fact_hourly_demand_hour_key",
+      "definition": "CREATE INDEX idx_fact_hourly_demand_hour_key ON project_dw.fact_hourly_demand USING btree (hour_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "idx_fact_hourly_demand_source_snapshot_key",
+      "definition": "CREATE INDEX idx_fact_hourly_demand_source_snapshot_key ON project_dw.fact_hourly_demand USING btree (source_snapshot_key)"
+    },
+    {
+      "table": "fact_hourly_demand",
+      "name": "uq_fact_hourly_demand_grain",
+      "definition": "CREATE UNIQUE INDEX uq_fact_hourly_demand_grain ON project_dw.fact_hourly_demand USING btree (authority_key, utc_hour_end)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "fact_hourly_generation_pkey",
+      "definition": "CREATE UNIQUE INDEX fact_hourly_generation_pkey ON project_dw.fact_hourly_generation USING btree (generation_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_fact_hourly_generation_date_key",
+      "definition": "CREATE INDEX idx_fact_hourly_generation_date_key ON project_dw.fact_hourly_generation USING btree (date_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_fact_hourly_generation_energy_source_key",
+      "definition": "CREATE INDEX idx_fact_hourly_generation_energy_source_key ON project_dw.fact_hourly_generation USING btree (energy_source_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_fact_hourly_generation_hour_key",
+      "definition": "CREATE INDEX idx_fact_hourly_generation_hour_key ON project_dw.fact_hourly_generation USING btree (hour_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_fact_hourly_generation_source_snapshot_key",
+      "definition": "CREATE INDEX idx_fact_hourly_generation_source_snapshot_key ON project_dw.fact_hourly_generation USING btree (source_snapshot_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_generation_authority_key",
+      "definition": "CREATE INDEX idx_generation_authority_key ON project_dw.fact_hourly_generation USING btree (authority_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_generation_date_key",
+      "definition": "CREATE INDEX idx_generation_date_key ON project_dw.fact_hourly_generation USING btree (date_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_generation_energy_source_key",
+      "definition": "CREATE INDEX idx_generation_energy_source_key ON project_dw.fact_hourly_generation USING btree (energy_source_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_generation_hour_key",
+      "definition": "CREATE INDEX idx_generation_hour_key ON project_dw.fact_hourly_generation USING btree (hour_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "idx_generation_snapshot_key",
+      "definition": "CREATE INDEX idx_generation_snapshot_key ON project_dw.fact_hourly_generation USING btree (source_snapshot_key)"
+    },
+    {
+      "table": "fact_hourly_generation",
+      "name": "uq_fact_hourly_generation_grain",
+      "definition": "CREATE UNIQUE INDEX uq_fact_hourly_generation_grain ON project_dw.fact_hourly_generation USING btree (authority_key, utc_hour_end, energy_source_key)"
+    }
+  ],
+  "sql_sha256": {
+    "sql\\09_phase3_performance\\01_benchmarks.sql": "a10bdf880e5679416ba2eb6f38e54ab2d695ec5c0763c0b421162ebe3174f942",
+    "sql\\09_phase3_performance\\02_candidate_indexes.sql": "850b4f2586f08aa8c449c6bf1899f766bb0589e763e5d7ce81616e4b6d97f992"
+  },
+  "candidate_storage_bytes": {
+    "idx_p3_demand_authority_date": 3588096,
+    "idx_p3_generation_source_date_authority": 36208640
+  },
+  "measurements": [],
+  "candidates_rolled_back": true,
+  "summary": [
+    {
+      "query": "demand_authority_month",
+      "before_median_ms": 5.401,
+      "after_median_ms": 0.409,
+      "time_improvement_pct": 92.42732827254213,
+      "before_cost": 875.08,
+      "after_cost": 312.14,
+      "candidate_indexes_used": [
+        "idx_p3_demand_authority_date"
+      ],
+      "results_unchanged": true
+    },
+    {
+      "query": "generation_fuel_month",
+      "before_median_ms": 26.961,
+      "after_median_ms": 2.39,
+      "time_improvement_pct": 91.13534364452357,
+      "before_cost": 2154.35,
+      "after_cost": 251.71,
+      "candidate_indexes_used": [
+        "idx_p3_generation_source_date_authority"
+      ],
+      "results_unchanged": true
+    },
+    {
+      "query": "demand_cube_2025",
+      "before_median_ms": 60.025,
+      "after_median_ms": 60.529,
+      "time_improvement_pct": -0.8396501457726029,
+      "before_cost": 5246.45,
+      "after_cost": 5246.45,
+      "candidate_indexes_used": [],
+      "results_unchanged": true
+    }
+  ]
+}

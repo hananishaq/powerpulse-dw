@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-24",
+  "runtime": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "checks": [
+    {
+      "name": "vw_q05_forecast_accuracy all components and rates match independent CSV",
+      "passed": true,
+      "detail": {
+        "groups": 120
+      }
+    },
+    {
+      "name": "vw_q06_underforecast_pattern all components and rates match independent CSV",
+      "passed": true,
+      "detail": {
+        "groups": 960
+      }
+    },
+    {
+      "name": "vw_forecast_month_hour_components all components and rates match independent CSV",
+      "passed": true,
+      "detail": {
+        "groups": 2880
+      }
+    },
+    {
+      "name": "baseline forecast population",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "real view handles null/zero/negative/equal/over/under forecast fixture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no eligible pairs produces NULL rates and sums",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "missing internal month retains zero counts and NULL rates",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SQL validation passes with edge fixtures",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "rolled-back fixtures restore all baseline view rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reinstall preserves all view rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "analytical submission SQL executes",
+      "passed": true,
+      "detail": {
+        "result_set_rows": [
+          120,
+          960,
+          24,
+          120
+        ]
+      }
+    }
+  ],
+  "source_sha256": {
+    "EIA930_BALANCE_2024_Jan_Jun_selected.csv": "2e754508a6acef06567364b22375f5bb464659981b73cbf847cfde9385f70f71",
+    "EIA930_BALANCE_2024_Jul_Dec_selected.csv": "aafeeedd6d1614287aaca77ce9a83e37aa02019f71a74dabaf323177ce7a81e8",
+    "EIA930_BALANCE_2025_Jan_Jun_selected.csv": "826f29984727b5c5bb733c584a6d7e18a31cdf34b35c10019e1f4da9390a9163",
+    "EIA930_BALANCE_2025_Jul_Dec_selected.csv": "929e01a1cb63a20644b37ecdfb00e96d248e843a0ffbfcc3d31cd43d16e956d6"
+  },
+  "sql_sha256": {
+    "sql/06_reporting/p3_forecast_views.sql": "03cebe16897dc235a245d9ea452d8f388a34f574fcf8b56c5f2bd81dac6897b0",
+    "sql/07_phase3_analytics/p3_validate.sql": "a5b0db7927ded1dc85d67cb76ec5722f08b11cc1300180af54c447402623c69e",
+    "sql/07_phase3_analytics/p3_q05_q06.sql": "6615d315d52b4ad4ae2d4341080aecb2403a7dcc9a6ff92f0dadc7c298adb31c"
+  },
+  "scope": "Forecast SQL validated on the full clean disposable warehouse. No production database changes; no human reviewer sign-off.",
+  "summary": {
+    "observed_hours": "87720",
+    "eligible_pairs": "87399",
+    "excluded_pairs": "321",
+    "abs_error_sum_mw": "128410021.0000",
+    "eligible_actual_sum_mw": "3576725839.0000",
+    "wape_pct": "3.5901555439290129"
+  }
+}

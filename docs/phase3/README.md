@@ -20,6 +20,9 @@ contribution. Other students' outputs remain separate team deliverables.
 | Measured demand finding for Qasim's report | `reports/phase3/mohid/demand_insight.md` |
 | Validation evidence and boundaries | `reports/phase3/mohid/validation.json` |
 | Two editable contributed slides for the final deck | `presentation/phase3/mohid_demand_overview.pptx` |
+| Muaz forecast SQL, BI contract, validation and benchmark run guide | `docs/phase3/muaz_forecast_performance.md` |
+| Muaz measured indexing report | `reports/phase3/Indexing_Report.pdf` |
+| Muaz raw runs, JSON plans and index inventory | `reports/phase3/performance/` |
 
 ## Run order
 
@@ -89,8 +92,9 @@ These tasks combine other students' work into the final team submission:
 - [ ] Phase 2 quality owner supplies the missing formal quality scripts/report
       and closes the warehouse-wide readiness gate, including generation.
 - [ ] Hanan reviews Q01/Q02 and contributes Q03/Q04 and OLAP.
-- [ ] Muaz compares his forecast components with authority analysis and supplies
-      measured indexing evidence.
+- [x] Muaz forecast components reconcile with authority analysis; measured
+      indexing evidence and the Indexing Report are supplied. Emaad's review
+      and master dashboard integration remain pending.
 - [ ] Emaad integrates the completed Executive Overview into the master PBIX
       and checks interactions with the other two pages.
 - [ ] Qasim incorporates the checked demand finding and two contributed slides.
@@ -104,7 +108,7 @@ These tasks combine other students' work into the final team submission:
 | Analytical SQL | All | Mohid Q01/Q02 supplied |
 | OLAP SQL | Hanan | Team dependency |
 | Reporting Views SQL | All | Mohid views supplied |
-| Indexing Report PDF | Muaz | Team dependency |
+| Indexing Report PDF | Muaz | Supplied with raw before/after plans and runs; reviewer acceptance pending |
 | Power BI PBIX | Emaad | Mohid's populated personal PBIX and source supplied |
 | Dashboard Screenshots PDF | Qasim | After final PBIX freeze |
 | Business Insights PDF | Qasim + all contributors | Mohid source contribution supplied |

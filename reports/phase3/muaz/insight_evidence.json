@@ -1,0 +1,143 @@
+{
+  "by_authority": [
+    {
+      "authority_code": "CISO",
+      "pairs": "17375",
+      "excluded": "169",
+      "mae_mw": "1922.2526618705035971",
+      "wape_pct": "7.5176480262391939",
+      "bias_mw": "1385.5401438848920863",
+      "underforecast_pct": "74.4920863309352518"
+    },
+    {
+      "authority_code": "PJM",
+      "pairs": "17471",
+      "excluded": "73",
+      "mae_mw": "3299.8689256482170454",
+      "wape_pct": "3.4889382560642706",
+      "bias_mw": "1413.4323164100509416",
+      "underforecast_pct": "65.0849979966802129"
+    },
+    {
+      "authority_code": "NYIS",
+      "pairs": "17539",
+      "excluded": "5",
+      "mae_mw": "561.1489822680882604",
+      "wape_pct": "3.2543104314109129",
+      "bias_mw": "487.0343805234049832",
+      "underforecast_pct": "86.9034722618165232"
+    },
+    {
+      "authority_code": "ISNE",
+      "pairs": "17542",
+      "excluded": "2",
+      "mae_mw": "321.3263595941169764",
+      "wape_pct": "2.4542343893903815",
+      "bias_mw": "225.0510204081632653",
+      "underforecast_pct": "69.3250484551362444"
+    },
+    {
+      "authority_code": "ERCO",
+      "pairs": "17472",
+      "excluded": "72",
+      "mae_mw": "1252.2992216117216117",
+      "wape_pct": "2.3082188970283594",
+      "bias_mw": "-429.2991071428571429",
+      "underforecast_pct": "40.6822344322344322"
+    }
+  ],
+  "worst_months": [
+    {
+      "authority_code": "CISO",
+      "month_start": "2025-04-01",
+      "eligible_forecast_pairs": 720,
+      "excluded_forecast_pairs": 0,
+      "forecast_wape_pct": "10.0251316497447949",
+      "forecast_mae_mw": "2282.6763888888888889",
+      "forecast_bias_mw": "1827.5875000000000000"
+    },
+    {
+      "authority_code": "CISO",
+      "month_start": "2025-10-01",
+      "eligible_forecast_pairs": 744,
+      "excluded_forecast_pairs": 0,
+      "forecast_wape_pct": "9.5518260323893601",
+      "forecast_mae_mw": "2381.8360215053763441",
+      "forecast_bias_mw": "2008.0188172043010753"
+    },
+    {
+      "authority_code": "CISO",
+      "month_start": "2024-04-01",
+      "eligible_forecast_pairs": 720,
+      "excluded_forecast_pairs": 0,
+      "forecast_wape_pct": "9.0989594721143890",
+      "forecast_mae_mw": "1960.5305555555555556",
+      "forecast_bias_mw": "1470.1861111111111111"
+    },
+    {
+      "authority_code": "CISO",
+      "month_start": "2025-11-01",
+      "eligible_forecast_pairs": 672,
+      "excluded_forecast_pairs": 49,
+      "forecast_wape_pct": "8.6372467052334976",
+      "forecast_mae_mw": "2081.2291666666666667",
+      "forecast_bias_mw": "1778.3422619047619048"
+    },
+    {
+      "authority_code": "CISO",
+      "month_start": "2025-03-01",
+      "eligible_forecast_pairs": 696,
+      "excluded_forecast_pairs": 47,
+      "forecast_wape_pct": "8.4936319303123879",
+      "forecast_mae_mw": "1907.6278735632183908",
+      "forecast_bias_mw": "1371.0244252873563218"
+    }
+  ],
+  "patterns": [
+    {
+      "authority_code": "PJM",
+      "calendar_year": 2024,
+      "season": "Summer",
+      "hour_ending": 0,
+      "eligible_forecast_pairs": 92,
+      "forecast_bias_mw": "9048.9239130434782609",
+      "underforecast_pct": "100.0000000000000000"
+    },
+    {
+      "authority_code": "PJM",
+      "calendar_year": 2024,
+      "season": "Summer",
+      "hour_ending": 1,
+      "eligible_forecast_pairs": 92,
+      "forecast_bias_mw": "8715.8913043478260870",
+      "underforecast_pct": "100.0000000000000000"
+    },
+    {
+      "authority_code": "PJM",
+      "calendar_year": 2024,
+      "season": "Summer",
+      "hour_ending": 23,
+      "eligible_forecast_pairs": 92,
+      "forecast_bias_mw": "8475.4021739130434783",
+      "underforecast_pct": "100.0000000000000000"
+    },
+    {
+      "authority_code": "PJM",
+      "calendar_year": 2025,
+      "season": "Summer",
+      "hour_ending": 0,
+      "eligible_forecast_pairs": 92,
+      "forecast_bias_mw": "8102.2934782608695652",
+      "underforecast_pct": "100.0000000000000000"
+    },
+    {
+      "authority_code": "PJM",
+      "calendar_year": 2024,
+      "season": "Summer",
+      "hour_ending": 2,
+      "eligible_forecast_pairs": 92,
+      "forecast_bias_mw": "8052.0760869565217391",
+      "underforecast_pct": "100.0000000000000000"
+    }
+  ]
+}
